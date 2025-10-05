@@ -1,0 +1,256 @@
+{
+ "editor.fontSize": 14,
+ "editor.formatOnSave": true,
+ "vim.statusBarColorControl": false,
+ "workbench.colorTheme": "Default Light+",
+ "vim.incsearch": true,
+ "vim.useSystemClipboard": false,
+ "vim.useCtrlKeys": true,
+ "vim.hlsearch": true,
+ "vim.leader": "<space>",
+ "vim.handleKeys": {
+  "<space>": true
+ },
+ "extensions.experimental.affinity": {
+  "asvetliakov.vscode-neovim": 1
+ },
+ "editor.fontFamily": "JetBrainsMono NFM",
+ "dotnet-test-explorer.testProjectPath": "**/*Tests.csproj",
+ "workbench.colorCustomizations": {
+  "tab.inactiveBackground": "#E9E1DB",
+  "editor.background": "#F1F1F1",
+  "editor.foreground": "#54433A",
+  "activityBar.activeBackground": "#af9494",
+  "activityBar.activeBorder": "#af9494",
+  "activityBarBadge.foreground": "#000000",
+  "activityBarBadge.background": "#ffffff",
+  "activityBar.inactiveForeground": "#ffffff",
+  "editorLineNumber.foreground": "#A98A78",
+  "editor.selectionBackground": "#E9E1DB",
+  "editor.selectionHighlightBackground": "#E9E1DB99",
+  "editorCursor.foreground": "#ddb9a5",
+  "editorWhitespace.foreground": "#A98A7866",
+  "editorIndentGuide.background1": "#A98A7844",
+  "editorOverviewRuler.wordHighlightStrongForeground": "#ff0000",
+  "editorBracketHighlight.foreground1": "#a74e61",
+  "editor.wordHighlightBackground": "#e5e0ea",
+  "editorIndentGuide.activeBackground1": "#A98A7888",
+  "editor.findMatchBackground": "#BC5C0066",
+  "editor.findMatchHighlightBackground": "#BC5C0033",
+  "statusBar.background": "#7892BD",
+  "statusBar.foreground": "#F1F1F1",
+  "activityBar.background": "#54433A",
+  "activityBar.foreground": "#F1F1F1",
+  "sideBar.background": "#E9E1DB",
+  "sideBar.foreground": "#54433A",
+  "list.focusBackground": "#54433a",
+  "list.focusForeground": "#fffdfc",
+  "list.activeSelectionBackground": "#dacccf",
+  "list.dropBackground": "#463131",
+  "list.hoverForeground": "#78d045",
+  "list.focusAndSelectionOutline": "#fff9fb",
+  "list.inactiveSelectionForeground": "#78d045",
+  "titleBar.activeBackground": "#54433A",
+  "titleBar.activeForeground": "#F1F1F1",
+
+  "terminal.ansiBlack": "#E9E1DB",
+  "terminal.ansiRed": "#C77B8B",
+  "terminal.ansiGreen": "#6E9B72",
+  "terminal.ansiYellow": "#BC5C00",
+  "terminal.ansiBlue": "#7892BD",
+  "terminal.ansiMagenta": "#BE79BB",
+  "terminal.ansiCyan": "#739797",
+  "terminal.ansiWhite": "#7D6658",
+  "terminal.ansiBrightBlack": "#A98A78",
+  "terminal.ansiBrightRed": "#BF0021",
+  "terminal.ansiBrightGreen": "#3A684A",
+  "terminal.ansiBrightYellow": "#A06D00",
+  "terminal.ansiBrightBlue": "#465AA4",
+  "terminal.ansiBrightMagenta": "#904180",
+  "terminal.ansiBrightCyan": "#3D6568",
+  "terminal.ansiBrightWhite": "#54433A"
+ },
+ "editor.semanticTokenColorCustomizations": {
+  "rules": {
+   "keyword.using": {
+    "foreground": "#ffff99"
+   }
+  }
+ },
+ "editor.tokenColorCustomizations": {
+  "[Default Light+]": {
+   "strings": "#191313",
+   "functions": "#bd5d00",
+   "keywords": "#bd5d00",
+   "types": "#749998",
+   "variables": "#191313",
+   "comments": "#918f8f",
+   "numbers": "#934682",
+   "textMateRules": [
+    {
+     "name": "modifier storage",
+     "scope": ["storage.modifier"],
+     "settings": {
+      "foreground": "#a74e61"
+     }
+    },
+    {
+     "scope": ["entity.other.attribute-name"],
+     "settings": {
+      "foreground": "#b58e84"
+     }
+    },
+    {
+     "scope": ["variable.language.this"],
+     "settings": {
+      "fontStyle": "italic",
+      "foreground": "#191313"
+     }
+    },
+    {
+     "scope": ["entity.name.function"],
+     "settings": {
+      "fontStyle": "italic",
+      "foreground": "#191313"
+     }
+    },
+    {
+     "scope": ["keyword.control.conditional.case"],
+     "settings": {
+      "foreground": "#191313",
+      "fontStyle": "bold"
+     }
+    },
+    {
+     "scope": ["keyword.operator.arithmetic"],
+     "settings": {
+      "foreground": "#c00828"
+     }
+    },
+    {
+     "scope": ["constant.language.null"],
+     "settings": {
+      "fontStyle": "italic",
+      "foreground": "#be7bbd"
+     }
+    },
+    {
+     "name": "block definition",
+     "scope": ["punctuation.definition.block"],
+     "settings": {
+      "foreground": "#eac096"
+     }
+    },
+    {
+     "scope": ["meta.method.declaration"],
+     "settings": {
+      "foreground": "#2asd37"
+     }
+    },
+    {
+     "scope": ["punctuation.definition.typeparameters"],
+     "settings": {
+      "foreground": "#749998"
+     }
+    },
+    {
+     "name": "keyword.other",
+     "scope": ["keyword.other.directive.using.cs"],
+     "settings": {
+      "foreground": "#a74e61"
+     }
+    },
+    {
+     "name": "keyword.other",
+     "scope": [
+      "keyword.type.void.cs",
+      "constant.language.boolean",
+      "keyword.type.bool.cs"
+     ],
+     "settings": {
+      "foreground": "#a74e61"
+     }
+    },
+
+    {
+     "name": "function Name",
+     "scope": ["entity.name.function"],
+     "settings": {
+      "foreground": "#a4679a",
+      "fontStyle": "bold"
+     }
+    },
+    {
+     "name": "keyword.other",
+     "scope": ["variable.language.base.cs"],
+     "settings": {
+      "foreground": "#373741"
+     }
+    },
+    {
+     "name": "keyword.other",
+     "scope": [
+      "keyword.preprocessor.endif.cs",
+      "punctuation.separator.hash.cs",
+      "keyword.preprocessor.if.cs",
+      "keyword.preprocessor.else.cs"
+     ],
+     "settings": {
+      "foreground": "#7d7daa"
+     }
+    }
+   ]
+  }
+ },
+ "omnisharp.useModernNet": false,
+ "editor.unicodeHighlight.invisibleCharacters": false,
+ "csharp.semanticHighlighting.enabled": false,
+ "editor.semanticHighlighting.enabled": false,
+ "cSpell.userWords": ["MonoBehaviour"],
+ "dotnet-test-explorer.autoExpandTree": true,
+ "security.workspace.trust.untrustedFiles": "open",
+ "explorer.confirmDragAndDrop": false,
+ "workbench.startupEditor": "none",
+ "prettier.tabWidth": 1,
+ "[typescriptreact]": {
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+ },
+ "[jsonc]": {
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+ },
+ "[typescript]": {
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+ },
+ "editor.defaultFormatter": "esbenp.prettier-vscode",
+ "notebook.defaultFormatter": "esbenp.prettier-vscode",
+ "workbench.iconTheme": "gruvbox-material-icon-theme",
+ "fileheader.author": "tendertree",
+ "fileheader.dateformat": "YYYY-MM-DD",
+ "autoHeader": {
+  "format": {
+   "startWith": "/**",
+   "middleWith": "*",
+   "endWith": "*/",
+   "headerPrefix": "@"
+  },
+  "header": {
+   "Author": "tendertree",
+   "Create Time": {
+    "type": "createTime",
+    "format": "YY-MM-DD"
+   },
+   "Modified by": {
+    "type": "modifier",
+    "value": "tendertree"
+   },
+   "Modified time": {
+    "type": "modifyTime",
+    "format": "YY-MM-DD"
+   },
+   "Description": ""
+  }
+ },
+ "remote.autoForwardPortsSource": "hybrid",
+ "terminal.integrated.fontFamily": "monospace"
+}
+

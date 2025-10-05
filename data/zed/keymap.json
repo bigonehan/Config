@@ -1,0 +1,113 @@
+// ~/.config/zed/keymap.json
+[
+  {
+    "context": "Editor",
+    "bindings": {
+      "space ,": "workspace::ToggleLeftDock",
+      "F4": "workspace::NewCenterTerminal"
+    }
+  },
+  // Normal Mode Bindings
+  //
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "n": "menu::SelectNext",
+      "e": "menu::SelectPrevious"
+    }
+  },
+  {
+    "context": "OutlinePanel",
+    "bindings": {
+      "n": "menu::SelectNext",
+      "e": "menu::SelectPrevious",
+      "shift-g": "menu::SelectLast",
+      "g g": "menu::SelectFirst"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "e": "vim::Up",
+      "n": "vim::Down",
+      "m": "vim::Left",
+      "i": "vim::Right",
+      "a": "vim::InsertAfter",
+      "s s": "editor::DeleteLine",
+      "j": "vim::Yank",
+      ":": "vim::Paste",
+      "gg": "vim::StartOfDocument",
+      "G": "vim::EndOfDocument",
+      ";": "command_palette::Toggle",
+      "f": "vim::NextWordEnd",
+      "l": "vim::Undo",
+      "z": "vim::PreviousWordStart",
+      "space o": "outline::Toggle",
+      "space v": "editor::GoToDefinition",
+      "space t f": "file_finder::Toggle",
+      "k": "search::SelectNextMatch",
+      "shift-k": "search::SelectPreviousMatch",
+      "ctrl e": "editor::MoveLineUp",
+      "ctrl n": "editor::MoveLineDown",
+      "g c c": "editor::ToggleComments",
+      "s v": "pane::SplitLeft",
+      "s h": "pane::SplitHorizontal",
+      "ctrl-w": "pane::CloseActiveItem"
+    }
+  },
+  {
+    "context": "Editor",
+    "bindings": {
+      "space ,": "workspace::ToggleLeftDock",
+      "F4": "workspace::NewCenterTerminal"
+    }
+  },
+  // Normal Mode Bindings
+  //
+  {
+    "context": "Editor && vim_mode == normal && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "e": "vim::Up",
+      "n": "vim::Down",
+      "m": "vim::Left",
+      "i": "vim::Right",
+      "a": "vim::InsertAfter",
+      "s s": "editor::DeleteLine",
+      "j": "vim::Yank",
+      ";": "vim::Paste",
+      "gg": "vim::StartOfDocument",
+      "G": "vim::EndOfDocument",
+      ":": "command_palette::Toggle",
+      "f": "vim::NextWordEnd",
+      "l": "vim::Undo",
+      "z": "vim::PreviousWordStart",
+      "space o": "outline::Toggle",
+      "space v": "editor::GoToDefinition",
+      "space t f": "file_finder::Toggle",
+      "k": "search::SelectNextMatch",
+      "shift-k": "search::SelectPreviousMatch",
+      "ctrl e": "editor::MoveLineUp",
+      "ctrl n": "editor::MoveLineDown",
+      "g c c": "editor::ToggleComments"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == visual && vim_operator == none && !VimWaiting",
+    "bindings": {
+      "e": "vim::Up",
+      "n": "vim::Down",
+      "m": "vim::Left",
+      "i": "vim::Right"
+    }
+  },
+  {
+    "context": "Dock || Terminal || Editor",
+    "bindings": {
+      "ctrl-m": "workspace::ActivatePaneLeft",
+      "ctrl-i": "workspace::ActivatePaneRight",
+      "ctrl-e": "workspace::ActivatePaneUp",
+      "ctrl-n": "workspace::ActivatePaneDown"
+    }
+  }
+]
+

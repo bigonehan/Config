@@ -1,0 +1,6 @@
+{
+  "lazy.nvim": { "branch": "main", "commit": "f918318d21956b0874a65ab35ce3d94d9057aabf" },
+  "lualine.nvim": { "branch": "master", "commit": "6a40b530539d2209f7dc0492f3681c8c126647ad" },
+  "melange-nvim": { "branch": "master", "commit": "f626d41b9110e6ab853538d8b939979a0f1adfeb" },
+  "nforcolemak-dh": { "branch": "main", "commit": "f15c3bb9367b7865de48ea6c096e5822eec4ffed" }
+}

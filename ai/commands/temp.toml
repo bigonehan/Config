@@ -1,0 +1,6 @@
+description = "test file"
+prompt = """
+
+reat the file on @{~/config/ai/manuals/gawi.md} and run the written function
+
+"""

@@ -1,0 +1,12 @@
+{
+    "myre": {
+        "prefix": "myreq",
+        "body": [
+            "luasnipt work test"
+        ],
+        "description": "Require module in lua"
+    }
+
+
+}
+

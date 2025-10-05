@@ -1,0 +1,53 @@
+theme = "melange-light"
+[editor]
+line-number = "relative"
+mouse = false
+true-color = true
+color-modes = true
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+
+
+[keys.normal]
+m="move_char_left"
+n="move_visual_line_down"
+e="move_visual_line_up"
+i="move_char_right"
+"^" ="goto_line_start"
+"$" ="goto_line_end"
+G="goto_last_line"
+a="append_mode"
+s="delete_selection_noyank"
+h="no_op"
+j="yank"
+k="no_op"
+l="no_op"
+";"="paste_after"
+C-f = [":new", ":insert-output lf-pick", "select_all", "split_selection_on_newline", "goto_file", "goto_last_modified_file", ":buffer-close!", ":redraw"]
+# d_c
+# h_m
+# j_y
+# k_n
+# l_i
+
+[keys.select]
+m="extend_char_left"
+n="extend_visual_line_down"
+e="extend_visual_line_up"
+i="extend_char_right"
+s="delete_selection_noyank"
+h="no_op"
+j="yank"
+k="no_op"
+l="no_op"
+a="append_mode"
+";"="paste_after"
+
+
+

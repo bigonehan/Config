@@ -1,0 +1,8 @@
+---
+name: front
+project_root: "/home/tree"
+windows:
+- zsh:
+    layout: cafe,120x29,0,0,1
+    panes:
+    - cd /home/tree

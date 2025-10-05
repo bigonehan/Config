@@ -1,0 +1,5 @@
+bookmark = [
+  { key = "r", path = "/" },
+  { key = 'p', path="/study"},
+  { key = "h", path = "~/" },
+]

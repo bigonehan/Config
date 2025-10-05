@@ -1,0 +1,45 @@
+name: Greetings
+on:
+  push:
+    branches: [ main ]
+jobs: 
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 100
+      - name: Build Changelog
+        uses: mikepenz/release-changelog-builder-action@v3
+        with:
+          toTag: "v3.1.1"
+          configurationJson: |
+            {
+                      
+              "template": "#{{CHANGELOG}}\n\n<details>\n<summary>Uncategorized</summary>\n\n#{{UNCATEGORIZED}}\n</details>",
+              "categories": [
+                {
+                 "title": "## 🚀 Features",
+                "labels": ["feature"]
+                 },
+                 {
+                  "title": "## 🐛 Fixes",
+                 "labels": ["fix"]
+                },
+                 {
+                 "title": "## 🧪 Tests",
+                  "labels": ["test"]
+                 },
+                {
+                    "title": "## 💬 Other",
+                    "labels": ["other"]
+                },
+                {
+                    "title": "## 📦 Dependencies",
+                    "labels": ["dependencies"]
+                }
+              ]
+            }
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

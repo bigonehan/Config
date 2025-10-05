@@ -1,0 +1,143 @@
+{
+	// Place your snippets for csharp here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// "description": "Log output to console"
+	// }
+	//Sycn spawned prefabs
+	"ISystem": {
+		"prefix": "cs",
+		"body": [
+			"using System.Collections;",
+			"using System.Collections.Generic;",
+			"using Unity.Entities;",
+			"using UnityEngine;",
+			"public partial struct $1 : ISystem",
+			"{",
+			"public void OnCreate(ref SystemState state)",
+			"{",
+			"}",
+			"public void OnUpdate(ref SystemState state)",
+			"{",
+			" }",
+			"}",
+		],
+		"description": "create ISystem",
+	},
+	"IComponentdata": {
+		"prefix": "cc",
+		"body": [
+			"using Unity.Entities;",
+			"public struct $1 : IComponentData",
+			"{",
+			"public $2",
+			"}"
+		],
+		"description": "add IComponentData"
+	},
+	"Authoring with prefab": {
+		"prefix": "cap",
+		"body": [
+			"using System.Collections;",
+			"using System.Collections.Generic;",
+			"using Unity.Entities;",
+			"using Unity.NetCode;",
+			"using UnityEngine;",
+			"public class $1 : MonoBehaviour",
+			"{",
+			"public GameObject prefabs = null;",
+			"}",
+			"public struct $1Data: IComponentData",
+			"{",
+			"public Entity prefab;",
+			"}",
+			"public class $1Baker: Baker <$1 >",
+			"{",
+			"public override void Bake($1 authoring)",
+			"{",
+			"if (authoring.prefabs != null)",
+			"{",
+			"var entity = GetEntity(TransformUsageFlags.Dynamic);",
+			"AddComponent(entity, new $1Data",
+			"{",
+			"prefab = GetEntity(authoring.prefabs, TransformUsageFlags.Dynamic)",
+			"});",
+			"}",
+			"}",
+			"}"
+		],
+		"description": "authoring prefab"
+	},
+	"EntityQueryBuilder": {
+		"prefix": "ceqb",
+		"body": [
+			"var builder = new EntityQueryBuilder(Allocator.Temp);",
+			"builder.WithAny<$1>();",
+			"RequireForUpdate(state.GetEntityQuery(builder));",
+		],
+		"description": "Created EntityQueryBuilder"
+	},
+	"EntityManger": {
+		"prefix": "emc",
+		"body": [
+			"EntityManager entityManager = World.DefaultGameObjectInjectionWorld.EntityManager;",
+			"Entity $1 = entityManager.CreateEntity(typeof($1));",
+			"entityManager.SetComponentData($1, new $1",
+			"{});"
+		],
+		"description": "Created EntityManger"
+	},
+	"prefab initiate": {
+		"prefix": "emi",
+		"body": [
+			"state.EntityManager.Instantiate(prefab, 1, Allocator.Temp);"
+		],
+		"description": "Instantiate prefab"
+	},
+	"unParenting": {
+		"prefix": "ecbup",
+		"body": [
+			"var rotatorEntity = SystemAPI.GetSingletonEntity<RotationSpeed>();",
+			"var ecb = new EntityCommandBuffer(Allocator.Temp);",
+			"DynamicBuffer<Child> children = SystemAPI.GetBuffer<Child>(rotatorEntity);",
+			"for (int i = 0; i < children.Length; i++)",
+			"{",
+			"ecb.RemoveComponent<Parent>(children[i].Value);",
+			"}"
+		],
+		"description": "unparenting for all child compoents"
+	},
+	"SystemAPIQueryToggle": {
+		"prefix": "sqt",
+		"body": [
+			"foreach (var Enabled in",
+			"SystemAPI.Query<EnabledRefRW<RotationSpeed>>()",
+			".WithOptions(EntityQueryOptions.IgnoreComponentEnabledState))",
+			"Enabled.ValueRW = !Enabled.ValueRO;",
+			"}"
+		],
+		"description": "Toggle for I enable components "
+	},
+	"localTransform": {
+		"prefix": "it",
+		"body": [
+			"commandBuffer.SetComponent($1, new LocalTransform()",
+			"{",
+			"Position = new Unity.Mathematics.float3(",
+			"UnityEngine.Random.Range(-10f, 10f),",
+			"0,",
+			"UnityEngine.Random.Range(-10f, 10f)),",
+			"Rotation = quaternion.identity,",
+			"Scale = 1f",
+			"});"
+		],
+		"description": "initialize baisc local transform"
+	}
+}

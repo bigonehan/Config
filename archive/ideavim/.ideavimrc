@@ -1,0 +1,59 @@
+set incsearch
+let mapleader = " "
+set clipboard+=unnamed 
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+Plug 'preservim/nerdtree'
+
+
+set visualbell
+set noerrorbells
+
+noremap m h
+noremap n j
+noremap e k
+noremap i l
+""hjlk
+
+noremap d c
+noremap f e 
+noremap j y 
+noremap k n 
+noremap l u 
+noremap n j 
+noremap o ;
+noremap p r 
+noremap r s
+noremap s "_d
+noremap ss "_dd 
+noremap t f
+noremap u u 
+noremap y o
+noremap h m
+ 
+noremap ; :
+noremap : p 
+
+
+map <leader>o <action>(ActivateStructureToolWindow)
+map <leader>q <action>(SearchEverywhere)
+nnoremap ,h :NERDTreeToggle<CR>
+nnoremap ss "_dd
+vnoremap ss "_dd
+nnoremap dd cc
+vnoremap dd cc
+nnoremap gt gf
+
+nnoremap gr <action>(Replace)
+vnoremap gr <action>(Replace)
+
+nnoremap <F5> u
+vnoremap <F5> u
+
+" Normal 모드에서 줄 이동
+nnoremap <C-k> :m .-2<CR>
+nnoremap <C-j> :m .+1<CR>
+
+" Visual 모드에서 선택 영역 이동
+vnoremap <C-k> :m '<-2<CR>gv=gv
+vnoremap <C-j> :m '>+1<CR>gv=gv
