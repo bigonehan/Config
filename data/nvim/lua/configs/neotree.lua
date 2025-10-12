@@ -16,7 +16,10 @@ require("neo-tree").setup({
 		mappings = {
 			["s"] = "open_vsplit",
 			["e"] = "",
-			["q"] = "close_window"
+			["q"] = "close_window",
+      ["<Left>"] = "none", -- ⬅️ 이게 핵심
+			        
+
 		}
 	},
 	update_focused_file = {

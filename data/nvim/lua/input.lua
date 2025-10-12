@@ -7,6 +7,12 @@ require("nforcolemak-dh")
 local s = vim.api.nvim_set_keymap
 local function run() require('neotest').run.run() end
 
+-- left unavaliable when neo-tree use 
+vim.keymap.set("n", "<Left>", function()
+  if vim.bo.filetype ~= "neo-tree" then
+    vim.cmd("vertical resize +1")
+  end
+end, { desc = "resize unless neo-tree" })
 
 
 --set some functions
@@ -70,8 +76,8 @@ vim.cmd [[vnoremap <silent> H :lua require('tsht').nodes()<CR>]]
 s('t', '<C-w>k', '<C-\\><C-n><C-w>k', { noremap = true }) --termial to buffer
 s('n', '<leader>w', '<C-w>w', { noremap = true })
 --s('n', 'gv', ':vsplit<CR>gd', { noremap = true })
-s("n", "<Left>", ":vertical resize +1<CR>", { noremap = true })
-s("n", "<Right>", ":vertical resize -1<CR>", { noremap = true })
+s("n", "<s-Left>", ":vertical resize +1<CR>", { noremap = true })
+s("n", "<s-Right>", ":vertical resize -1<CR>", { noremap = true })
 --s("n", "<Up>", ":resize -1<CR>", { noremap = true })
 --s("n", "<Down>", ":resize +1<CR>", { noremap = true })
 s('n', '<C-w>m', '<C-w>h', { noremap = true, silent = true })
