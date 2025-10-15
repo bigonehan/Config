@@ -287,3 +287,5 @@ export ENCORE_INSTALL="/home/tree/.encore"
   
 export GRIST_API_KEY="d3bcf33bddc51f08787848385053e13d83beaf47"
 export GRIST_DOC_ID="2jGAqqKxzTt9"
+
+
