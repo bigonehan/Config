@@ -1,0 +1,7 @@
+google-chrome
+google-cloud-cli
+icu66-bin
+icu66-bin-debug
+playwright
+yay
+yay-debug

@@ -1,0 +1,163 @@
+{
+	"basic layout": {
+		"prefix": "ba",
+		"body": [
+			"import{redirect} from 'next/navigation'",
+			"interface LayoutProp{",
+			" children:React.ReactNode;}",
+			"const $1 = async ({childern}:LayoupProp)=>{",
+			" const {userId} = true;",
+			" if(!userId){",
+			"redirect('/sign-in');}",
+			"retrun (<div> {children}</div>);}"
+		]
+	},
+	"crud next router export": {
+		"prefix": "ncrud",
+		"body": [
+			"//const DATA_FILE_PATH = path.join(process.cwd(), '/src/data/posts.json');",
+			"const ${1:name}CRUD = new ${1:name}CRUDImplFileSystem(DATA_FILE_PATH);",
+			"export const GET = (req: NextApiRequest, res: NextApiResponse) => PostHandler(${1:name}CRUD)(req, res);",
+			"export const POST = (req: NextApiRequest, res: NextApiResponse) => PostHandler(${1:name}CRUD)(req, res);",
+			"export const PUT = (req: NextApiRequest, res: NextApiResponse) => PostHandler(${1:name}CRUD)(req, res);",
+			"export const DELETE = (req: NextApiRequest, res: NextApiResponse) => PostHandler(${1:name}CRUD)(req, res);"
+		]
+	},
+	"glsv": {
+		"prefix": "glsv",
+		"body": [
+			"void main() {",
+			"vUv = uv;",
+			"gl_Position = projectionMatrix * modelViewMatrix * vec4(position, 1.0)}"
+		]
+	},
+	"Motion div": {
+		"prefix": "md",
+		"body": [
+			"<motion.div",
+			"initial={{ opacity: 0 }}",
+			"animate={{",
+			"opacity: 1,",
+			"transition:",
+			"{",
+			"delay: 2.4,",
+			"duration: 0.4,",
+			"ease: 'easeIn'},}}",
+			"className='dv'>",
+			"</motion.div>"
+		],
+		"description": "Require module in lua"
+	},
+	"basic component export": {
+		"prefix": "ef",
+		"body": [
+			"export function ${1:name}(){",
+			"return(",
+			"<div>${2:data}</div>",
+			")}"
+		],
+		"description": "Require module in lua"
+	},
+	"basic component default export": {
+		"prefix": "edf",
+		"body": [
+			"export default function ${1:name}(): JSX.Element{",
+			"return(",
+			"<div>${2:data}</div>",
+			")}"
+		],
+		"description": "Require module in lua"
+	},
+	"myre2": {
+		"prefix": "pc",
+		"body": [
+			"import { PrismaClient } from '@prisma/client';",
+			"let prisma: PrismaClient;",
+			"declare const global: any;",
+			"if (process.env.NODE_ENV === 'production') {",
+			"prisma = new PrismaClient();",
+			"} else {",
+			"if (!global.prisma) {",
+			"global.prisma = new PrismaClient();",
+			"}",
+			"prisma = global.prisma;",
+			"}",
+			"export default prisma;"
+		],
+		"description": "prismaClient"
+	},
+	"animejsObject": {
+		"prefix": "ani",
+		"body": [
+			" const ${1:name} = anime({",
+			"targets: '.moving-box',",
+			"keyframes: [",
+			"{ translateY: -40 }],",
+			"delay: anime.stagger(100),",
+			"loop: true,",
+			"direction: 'alternate',",
+			"autoplay: false,",
+			"duration: 3000,"
+		],
+		"description": "animejs object "
+	},
+	"viTest template": {
+		"prefix": "vt",
+		"body": [
+			"import { expect, test } from 'vitest'",
+			"import { ${1:name} } from ' ${1:name}'",
+			"test('adds 1 + 2 to equal 3', () => {",
+			"expect( ${1:name}(1, 2)).toBe(3)",
+			")}"
+		],
+		"description": "vitest template"
+	},
+	"unitTest": {
+		"prefix": "te",
+		"body": [
+			"test('${1:name}', async () => {",
+			"       expect(${2:function}).toBe();",
+			"}"
+		],
+		"description": "unit test"
+	},
+	"unitTest Describe": {
+		"prefix": "de",
+		"body": [
+			"describe(${1:name}, () => {",
+			"  it('should add a student correctly', () => {",
+			"    expect(students).toContainEqual(student);",
+			" });",
+			"});"
+		],
+		"description": "unit test"
+	},
+	"storybookBasic": {
+		"prefix": "st",
+		"body": [
+			"import type { Meta, StoryObj } from '@storybook/react';",
+			"import { fn } from '@storybook/test';",
+			"import { $(1:name) } from './Button';",
+			"const meta = {",
+			"title: $(1:name),",
+			"component: Button,",
+			"parameters: {",
+			"layout: 'centered'",
+			"},",
+			"tags: ['autodocs'],",
+			"argTypes: {",
+			"backgroundColor: { control: 'color'",
+			"},",
+			"},",
+			" args: { onClick: fn()},",
+			"} satisfies Meta<typeof Button>;",
+			"export default meta;",
+			"type Story = StoryObj<typeof meta>;",
+			"export const Primary: Story = {",
+			"args: {",
+			"$(2:props)",
+			"},",
+			"};"
+		]
+	}
+}
