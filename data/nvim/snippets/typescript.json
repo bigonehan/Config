@@ -160,99 +160,95 @@
 			"};"
 		]
 	},
-"Effect Layer with Scoped Resource": {
-    "prefix": "effect-layer-scoped",
-    "body": [
-      "class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<${1:ServiceName}, {",
-      "\treadonly ${2:method}: (${3:param}: ${4:string}) => Effect.Effect<${5:any}>",
-      "}>() {",
-      "\tstatic readonly Live = Layer.scoped(",
-      "\t\t${1:ServiceName},",
-      "\t\tEffect.gen(function* () {",
-      "\t\t\t// acquire resource with cleanup",
-      "\t\t\tconst ${3:resource} = yield* Effect.acquireRelease(",
-      "\t\t\t\tEffect.sync(() => {",
-      "\t\t\t\t\tconsole.log(\"${4:Acquiring resource}\");",
-      "\t\t\t\t\treturn ${5:createResource()};",
-      "\t\t\t\t}),",
-      "\t\t\t\t(${3:resource}) => Effect.sync(() => {",
-      "\t\t\t\t\tconsole.log(\"${6:Releasing resource}\");",
-      "\t\t\t\t\treturn ${3:resource}.${7:close()};",
-      "\t\t\t\t})",
-      "\t\t\t);",
-      "",
-      			"\t\t\t// return service implementation",
-      "\t\t\treturn {",
-      "\t\t\t\t${2:method}: (${3:param}) => Effect.tryPromise(() => ${3:resource}.${2:method}(${3:param}))",
-      "\t\t\t};",
-      "\t\t})",
-      "\t);",
-      "",
-      "\tstatic readonly Test = Layer.succeed(${1:ServiceName}, {",
-      "\t\t${9:method: (param) => Effect.succeed(mockValue)}",
-      "\t});",
-      "}"
-    ],
-    "description": "Create an Effect-TS service with scoped resource management (acquire/release)"
-  },
-  
-  "Effect Layer Simple": {
-    "prefix": "effect-layer-simple",
-    "body": [
-      "class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<${1:ServiceName}, {",
-      "\t${2:readonly method: (param: string) => Effect.Effect<any>}",
-      "}>() {",
-      "\tstatic readonly Live = Layer.succeed(${1:ServiceName}, {",
-      "\t\t${3:method: (param) => Effect.sync(() => implementation(param))}",
-      "\t});",
-      "}"
-    ],
-    "description": "Create a simple Effect-TS service without resource management"
-  },
-
-  "Effect Layer with Dependencies": {
-    "prefix": "effect-layer-deps",
-    "body": [
-      "class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<${1:ServiceName}, {",
-      "\t${2:readonly method: (param: string) => Effect.Effect<any>}",
-      "}>() {",
-      "\tstatic readonly Live = Layer.effect(",
-      "\t\t${1:ServiceName},",
-      "\t\t${3:Dependency}.pipe(",
-      "\t\t\tEffect.map((${4:dep}) => ({",
-      "\t\t\t\t${5:method: (param) => Effect.sync(() => ${4:dep}.${6:use}(param))}",
-      "\t\t\t}))",
-      "\t\t)",
-      "\t);",
-      "}"
-    ],
-    "description": "Create an Effect-TS service with dependencies"
-  },
-
-  "Effect Acquire Release": {
-    "prefix": "effect-acquire-release",
-    "body": [
-      "const ${1:resource} = yield* Effect.acquireRelease(",
-      "\tEffect.sync(() => {",
-      "\t\tconsole.log(\"${2:Acquiring}\");",
-      "\t\treturn ${3:create()};",
-      "\t}),",
-      "\t(${1:resource}) => Effect.sync(() => {",
-      "\t\tconsole.log(\"${4:Releasing}\");",
-      "\t\treturn ${1:resource}.${5:close()};",
-      "\t})",
-      ");"
-    ],
-    "description": "Create an Effect acquireRelease block"
-  },
-
-  "Effect Service Tag": {
-    "prefix": "effect-tag",
-    "body": [
-      "class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<${1:ServiceName}, {",
-      "\t${2:readonly method: (param: string) => Effect.Effect<any>}",
-      "}>() {}"
-    ],
-    "description": "Create an Effect-TS service tag"
-  }
+	"Effect Layer with Scoped Resource": {
+		"prefix": "effect-layer-scoped",
+		"body": [
+			"class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<${1:ServiceName}, {",
+			"\treadonly ${2:method}: (${3:param}: ${4:string}) => Effect.Effect<${5:any}>",
+			"}>() {",
+			"\tstatic readonly Live = Layer.scoped(",
+			"\t\t${1:ServiceName},",
+			"\t\tEffect.gen(function* () {",
+			"\t\t\t// acquire resource with cleanup",
+			"\t\t\tconst ${6:resource} = yield* Effect.acquireRelease(",
+			"\t\t\t\tEffect.sync(() => {",
+			"\t\t\t\t\tconsole.log(\"${7:Acquiring resource}\");",
+			"\t\t\t\t\treturn ${8:createResource()};",
+			"\t\t\t\t}),",
+			"\t\t\t\t(${6:resource}) => Effect.sync(() => {",
+			"\t\t\t\t\tconsole.log(\"${9:Releasing resource}\");",
+			"\t\t\t\t\treturn ${6:resource}.${10:close()}();",
+			"\t\t\t\t})",
+			"\t\t\t);",
+			"",
+			"\t\t\t// return service implementation",
+			"\t\t\treturn {",
+			"\t\t\t\t${2:method}: (${3:param}) => Effect.tryPromise(() => ${6:resource}.${2:method}(${3:param}))",
+			"\t\t\t};",
+			"\t\t})",
+			"\t);",
+			"",
+			"\tstatic readonly Test = Layer.succeed(${1:ServiceName}, {",
+			"\t\t${2:method}: (${3:param}) => Effect.succeed(${6:mockValue})",
+			"\t});",
+			"}"
+		],
+		"description": "Create an Effect-TS service with scoped resource management (acquire/release)"
+	},
+	"Effect Layer Simple": {
+		"prefix": "effect-layer-simple",
+		"body": [
+			"class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<${1:ServiceName}, {",
+			"\treadonly ${2:method}: (${3:param}: ${4:string}) => Effect.Effect<${5:any}>",
+			"}>() {",
+			"\tstatic readonly Live = Layer.succeed(${1:ServiceName}, {",
+			"\t\t${2:method}: (${3:param}) => Effect.sync(() => ${6:implementation}(${3:param}))",
+			"\t});",
+			"}"
+		],
+		"description": "Create a simple Effect-TS service without resource management"
+	},
+	"Effect Layer with Dependencies": {
+		"prefix": "effect-layer-deps",
+		"body": [
+			"class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<${1:ServiceName}, {",
+			"\treadonly ${2:method}: (${3:param}: ${4:string}) => Effect.Effect<${5:any}>",
+			"}>() {",
+			"\tstatic readonly Live = Layer.effect(",
+			"\t\t${1:ServiceName},",
+			"\t\t${6:Dependency}.pipe(",
+			"\t\t\tEffect.map((${7:dep}) => ({",
+			"\t\t\t\t${2:method}: (${3:param}) => Effect.sync(() => ${7:dep}.${8:use}(${3:param}))",
+			"\t\t\t}))",
+			"\t\t)",
+			"\t);",
+			"}"
+		],
+		"description": "Create an Effect-TS service with dependencies"
+	},
+	"Effect Acquire Release": {
+		"prefix": "effect-acquire-release",
+		"body": [
+			"const ${1:resource} = yield* Effect.acquireRelease(",
+			"\tEffect.sync(() => {",
+			"\t\tconsole.log(\"${2:Acquiring}\");",
+			"\t\treturn ${3:create()};",
+			"\t}),",
+			"\t(${1:resource}) => Effect.sync(() => {",
+			"\t\tconsole.log(\"${4:Releasing}\");",
+			"\t\treturn ${1:resource}.${5:close()};",
+			"\t})",
+			");"
+		],
+		"description": "Create an Effect acquireRelease block"
+	},
+	"Effect Service Tag": {
+		"prefix": "effect-tag",
+		"body": [
+			"class ${1:ServiceName} extends Context.Tag(\"${1:ServiceName}\")<${1:ServiceName}, {",
+			"\treadonly ${2:method}: (${3:param}: ${4:string}) => Effect.Effect<${5:any}>",
+			"}>() {}"
+		],
+		"description": "Create an Effect-TS service tag"
+	}
 }
