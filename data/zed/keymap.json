@@ -1,3 +1,4 @@
+// ~/.config/zed/keymap.json
 [
   {
     "context": "VimControl && !menu",
@@ -47,12 +48,24 @@
       "s h": "pane::SplitHorizontal",
       "ctrl-w": "pane::CloseActiveItem",
       "f1": "panel::NextPanelTab",
-      "ctrl-b-m": "workspace::ActivatePaneLeft",
-      "ctrl-b-i": "workspace::ActivatePaneRight"
+      "[ ;": "editor::GoToDiagnostic",
+      "] ;": "editor::GoToPreviousDiagnostic",
+      "space q": "pane::DeploySearch",
+      "alt-o": "pane::GoBack",
+      "alt-i": "pane::GoForward"
+    }
+  }, // Normal Mode Bindings
+  {
+    "context": "Dock || Terminal || Editor",
+    "bindings": {
+      "ctrl-m": "workspace::ActivatePaneLeft",
+      "ctrl-l": "workspace::ActivatePaneRight",
+      "ctrl-e": "workspace::ActivatePaneUp",
+      "ctrl-n": "workspace::ActivatePaneDown",
+      "shift-left": "workspace::ActivatePaneLeft",
+      "shift-right": "workspace::ActivatePaneRight"
     }
   },
-
-  // Normal Mode Bindings
   //
   {
     "context": "ProjectPanel && not_editing",
@@ -69,19 +82,7 @@
       "shift-g": "menu::SelectLast",
       "g g": "menu::SelectFirst"
     }
-  },
-
-  // Normal Mode Bindings
-  //
-
-  {
-    "context": "Dock || Terminal || Editor",
-    "bindings": {
-      "ctrl-m": "workspace::ActivatePaneLeft",
-      "ctrl-l": "workspace::ActivatePaneRight",
-      "ctrl-e": "workspace::ActivatePaneUp",
-      "ctrl-n": "workspace::ActivatePaneDown"
-    }
   }
 ]
+// rstarstr
 

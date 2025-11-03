@@ -13,6 +13,14 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
 	{
+		dir = "/home/tree/config/scripts/monogen",
+		name = "monogen",
+		lazy = false,
+		config = function()
+			require("monogen").setup()
+		end,
+	},
+	{
 		"m4xshen/hardtime.nvim",
 		lazy = false,
 		dependencies = { "MunifTanjim/nui.nvim" },
@@ -87,15 +95,15 @@ require('lazy').setup({
 		}
 	},
 	"sindrets/diffview.nvim",
-{
-  "monkoose/neocodeium",
-  event = "VeryLazy",
-  config = function()
-    local neocodeium = require("neocodeium")
-    neocodeium.setup()
-    vim.keymap.set("i", "<A-f>", neocodeium.accept)
-  end,
-},
+	{
+		"monkoose/neocodeium",
+		event = "VeryLazy",
+		config = function()
+			local neocodeium = require("neocodeium")
+			neocodeium.setup()
+			vim.keymap.set("i", "<A-f>", neocodeium.accept)
+		end,
+	},
 	{
 		'mfussenegger/nvim-dap',
 		config = function()
@@ -282,9 +290,8 @@ require('lazy').setup({
 		},
 		config = function()
 			local presets = require("markview.presets");
-require("markview").setup(presets.no_nerd_fonts);
-			
-					end
+			require("markview").setup(presets.no_nerd_fonts);
+		end
 	},
 
 
@@ -548,7 +555,6 @@ require("markview").setup(presets.no_nerd_fonts);
 		config = function()
 			vim.g.astro_typescript = 'enable'
 			vim.g.astro_stylus = 'enable'
-
 		end,
 		ft = { 'astro' },
 		dependencies = {
@@ -678,7 +684,7 @@ require("markview").setup(presets.no_nerd_fonts);
 			event = "VeryLazy",
 			version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
 			opts = {
-						},
+			},
 
 			-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
 			build = "make",

@@ -17,8 +17,13 @@ require("neo-tree").setup({
 			["s"] = "open_vsplit",
 			["e"] = "",
 			["q"] = "close_window",
-      ["<Left>"] = "none", -- ⬅️ 이게 핵심
-			        
+			["<Left>"] = "none", -- ⬅️ 이게 핵심
+			["<leader>mg"] = {
+				function(state)
+					vim.cmd("MonogenAdapter")
+				end,
+				desc = "mygen",
+			},
 
 		}
 	},
