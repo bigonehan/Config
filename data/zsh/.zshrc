@@ -289,3 +289,10 @@ export GRIST_API_KEY="d3bcf33bddc51f08787848385053e13d83beaf47"
 export GRIST_DOC_ID="2jGAqqKxzTt9"
 export PATH="$HOME/.cargo/bin:$PATH"
 
+alias mygen="bun ~/config/scripts/gen.ts"
+# oneMono 모노레포 단축 이동 명령어
+alias cdo="cd /home/tree/project/oneMono"
+alias cdoa='cd /home/tree/project/oneMono/packages/adapters'
+alias cdos='cd /home/tree/project/oneMono/packages/services'
+alias cdod='cd /home/tree/project/oneMono/packages/domains'
+alias cdoi='cd /home/tree/project/oneMono/packages/infras'

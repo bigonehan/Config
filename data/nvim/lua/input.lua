@@ -180,5 +180,16 @@ end
 -- 키 매핑 (예: <leader>e로 설정)
 vim.api.nvim_set_keymap('n', '<leader>e', ':lua open_entity_file()<CR>', { noremap = true, silent = true })
 
+--- 모노레포 이동 
+local dirs = {
+  adapters = "/home/tree/project/oneMono/packages/adapters",
+  services = "/home/tree/project/oneMono/packages/services",
+  domains  = "/home/tree/project/oneMono/packages/domains",
+  infras   = "/home/tree/project/oneMono/packages/infras",
+}
 
+vim.keymap.set('n', '<leader>cda', function() vim.cmd('cd ' .. dirs.adapters); print("Moved to adapters") end, {})
+vim.keymap.set('n', '<leader>cds', function() vim.cmd('cd ' .. dirs.services); print("Moved to services") end, {})
+vim.keymap.set('n', '<leader>cdd', function() vim.cmd('cd ' .. dirs.domains); print("Moved to domains") end, {})
+vim.keymap.set('n', '<leader>cdi', function() vim.cmd('cd ' .. dirs.infras); print("Moved to infras") end, {})
 
