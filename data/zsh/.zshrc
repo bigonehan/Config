@@ -285,8 +285,6 @@ _atuin_search() {
 export ENCORE_INSTALL="/home/tree/.encore"
   export PATH="$ENCORE_INSTALL/bin:$PATH"
   
-export GRIST_API_KEY="d3bcf33bddc51f08787848385053e13d83beaf47"
-export GRIST_DOC_ID="2jGAqqKxzTt9"
 export PATH="$HOME/.cargo/bin:$PATH"
 
 alias mygen="bun ~/config/scripts/gen.ts"
