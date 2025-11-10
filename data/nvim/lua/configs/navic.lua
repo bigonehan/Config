@@ -30,7 +30,7 @@ navic.setup {
 	},
 	lsp = {
 		auto_attach = true,
-		preference = nil,
+		preference = { "rust-analyzer", "rust_analyzer" },
 	},
 }
 vim.g.navic_silence = true

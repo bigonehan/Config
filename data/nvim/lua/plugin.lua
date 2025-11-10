@@ -5,7 +5,7 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 		"clone",
 		"--filter=blob:none",
 		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
+		"--branch=stable",
 		lazypath,
 	})
 end
@@ -31,67 +31,56 @@ require('lazy').setup({
 		keys = {
 			{ "<leader>hb", function() require("harpoon.mark").add_file() end,        desc = "Toggle Harpoon Menu" },
 			{ "<leader>ho", function() require("harpoon.ui").toggle_quick_menu() end, desc = "Toggle Harpoon Menu" },
-
-			{ "<leader>he", function() require("harpoon.ui").nav_next() end, desc = "Toggle Harpoon Menu" }
-			,
-			{ "<leader>hn", function() require("harpoon.ui").nav_prev() end, desc = "Toggle Harpoon Menu" }
+			{ "<leader>he", function() require("harpoon.ui").nav_next() end,          desc = "Toggle Harpoon Menu" },
+			{ "<leader>hn", function() require("harpoon.ui").nav_prev() end,          desc = "Toggle Harpoon Menu" }
 		}
 	},
 	{
 		"LintaoAmons/bookmarks.nvim",
-		-- pin the plugin at specific version for stability
-		-- backup your bookmark sqlite db when there are breaking changes (major version change)
 		tag = "3.2.0",
 		event = 'BufRead',
 		dependencies = {
 			{ "kkharji/sqlite.lua" },
-			{ "nvim-telescope/telescope.nvim" }, -- currently has only telescopes supported, but PRs for other pickers are welcome
-			{ "stevearc/dressing.nvim" }, -- optional: better UI
-			{ "GeorgesAlkhouri/nvim-aider" } -- optional: for Aider integration
+			{ "nvim-telescope/telescope.nvim" },
+			{ "stevearc/dressing.nvim" },
+			{ "GeorgesAlkhouri/nvim-aider" }
 		},
 		config = function()
-			local opts = {}         -- check the "./lua/bookmarks/default-config.lua" file for all the options
-			require("bookmarks").setup(opts) -- you must call setup to init sqlite db
+			local opts = {}
+			require("bookmarks").setup(opts)
 		end,
 	},
-
 	{
 		'nvim-neo-tree/neo-tree.nvim',
 		dependencies = { "nvim-lua/plenary.nvim", "nvim-tree/nvim-web-devicons" },
-
 		config = function()
 			require("configs.neotree")
 		end,
 		keys = {
+			{ ",h", ":Neotree toggle<CR>", silent = true }
+		}
+	},
+	{
+		"neovim/nvim-lspconfig",
+		dependencies = {
 			{
-				",h", ":Neotree toggle<CR>", silent = true
+				"SmiteshP/nvim-navbuddy",
+				dependencies = {
+					"SmiteshP/nvim-navic",
+					"MunifTanjim/nui.nvim"
+				},
+				opts = { lsp = { auto_attach = true } }
 			}
 		}
-	}, {
-	"neovim/nvim-lspconfig",
-	dependencies = {
-		{
-			"SmiteshP/nvim-navbuddy",
-			dependencies = {
-				"SmiteshP/nvim-navic",
-				"MunifTanjim/nui.nvim"
-			},
-			opts = { lsp = { auto_attach = true } }
-		}
-	}
-},
+	},
 	"nvim-neotest/nvim-nio",
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		opts = {
-			-- your configuration comes here
-		},
+		opts = {},
 		event = 'BufRead',
 		keys = {
-			{
-				"<f10>", ":TodoTelescope<CR>", silent = true
-			}
+			{ "<f10>", ":TodoTelescope<CR>", silent = true }
 		}
 	},
 	"sindrets/diffview.nvim",
@@ -112,8 +101,6 @@ require('lazy').setup({
 		dependencies = {
 			"rcarriga/nvim-dap-ui",
 			"mxsdev/nvim-dap-vscode-js",
-			-- lazy spec to build "microsoft/vscode-js-debug" from source
-
 		},
 		keys = {
 			{ 'fp', ":lua require'dap'.toggle_breakpoint() <cr>" },
@@ -126,7 +113,6 @@ require('lazy').setup({
 		version = "1.x",
 		build = "npm i && npm run compile vsDebugServerBundle && mv dist out"
 	},
-
 	{
 		'rcarriga/nvim-notify',
 		event = 'BufEnter'
@@ -134,12 +120,10 @@ require('lazy').setup({
 	'MunifTanjim/nui.nvim',
 	{
 		'prisma/vim-prisma',
-		ft = "prisma", -- prisma 파일 타입에 대해서만 로드
+		ft = "prisma",
 		config = function()
-			-- 플러그인 설정
 		end,
 	},
-
 	{
 		'nvim-neotest/neotest',
 		dependencies = {
@@ -161,7 +145,7 @@ require('lazy').setup({
 				adapters = {
 					require("neotest-vitest") {
 						filter_dir = function(name, rel_path, root)
-							return rel_path:match("^tests") -- 또는 rel_path == "tests"
+							return rel_path:match("^tests")
 						end,
 					},
 				},
@@ -176,22 +160,17 @@ require('lazy').setup({
 			{ "ts", function() require("neotest").summary.toggle() end,                                 desc = "Toggle Summary" },
 			{ "to", function() require("neotest").output.open({ enter = true, auto_close = true }) end, desc = "Show Output" },
 		}
-
-	}
-
-	,
+	},
 	{ 'nvim-neotest/neotest-jest',   ft = "typescript", },
 	{ "thenbe/neotest-playwright",   ft = "typescript", },
 	{ 'rouge8/neotest-rust',         ft = "rust" },
 	{ "nvim-neotest/neotest-python", ft = "python" },
 	{ "nvim-neotest/neotest-go",     ft = "go" },
-
 	{
 		'lewis6991/gitsigns.nvim',
 		config = function()
 			require("configs.gitsign")
 		end
-
 	},
 	{
 		'TimUntersberger/neogit',
@@ -201,7 +180,6 @@ require('lazy').setup({
 		end,
 		keys = {
 			{ "<f7>", function() require("neogit").open() end, desc = "Neogit open" },
-
 		}
 	},
 	"nathom/filetype.nvim",
@@ -213,10 +191,9 @@ require('lazy').setup({
 		event = 'BufRead',
 		lazy = false,
 		enabled = false,
-
 	},
 	'preservim/tagbar',
-	'ludovicchabant/vim-gutentags', -- Automatic tags management
+	'ludovicchabant/vim-gutentags',
 	'nvim-lua/plenary.nvim',
 	'sindrets/diffview.nvim',
 	{
@@ -227,17 +204,13 @@ require('lazy').setup({
 		end,
 		keys = {
 			{ '<leader>tb', ':Telescope buffers<CR>',    noremap = true, silent = true },
-			--{ '<leader>th', ':Telescope help_tags<CR>',  noremap = true, silent = true },
 			{ '<leader>tf', ':Telescope find_files<CR>', noremap = true, silent = true },
-
-
 		}
 	},
 	{
 		'nvim-telescope/telescope-fzf-native.nvim',
 		build =
 		'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
-
 	},
 	{
 		'nvim-telescope/telescope-file-browser.nvim',
@@ -248,7 +221,6 @@ require('lazy').setup({
 		keys = {
 			{
 				'<f6>',
-
 				function()
 					require("telescope").extensions.file_browser.file_browser()
 					print("telecope run")
@@ -257,7 +229,6 @@ require('lazy').setup({
 				silent = true
 			}
 		}
-
 	},
 	{
 		"ahmedkhalf/project.nvim",
@@ -265,7 +236,6 @@ require('lazy').setup({
 			require("project_nvim").setup {}
 		end
 	},
-
 	{
 		"lukas-reineke/indent-blankline.nvim",
 		main = "ibl",
@@ -281,24 +251,17 @@ require('lazy').setup({
 			require('numb').setup()
 		end
 	},
-
 	{
 		'OXY2DEV/markview.nvim',
 		lazy = false,
-		priority = 49, -- assuming nvim-treesitter has priority = 50, the default
-		ops = {
-		},
+		priority = 49,
+		ops = {},
 		config = function()
 			local presets = require("markview.presets");
 			require("markview").setup(presets.no_nerd_fonts);
 		end
 	},
-
-
-
-
 	'rhysd/git-messenger.vim',
-	-- UI
 	'Shatur/neovim-session-manager',
 	{
 		'numToStr/Comment.nvim',
@@ -317,7 +280,7 @@ require('lazy').setup({
 		dependencies = { "OXY2DEV/markview.nvim" },
 		build = { ':TSUpdate', ':TSInstall markdown markdown_inline' }
 	},
-	'nvim-treesitter/nvim-treesitter-textobjects', --additional text object
+	'nvim-treesitter/nvim-treesitter-textobjects',
 	'nvim-treesitter/nvim-treesitter-context',
 	'vim-pandoc/vim-pandoc-syntax',
 	'RRethy/nvim-treesitter-textsubjects',
@@ -326,9 +289,7 @@ require('lazy').setup({
 		config = function()
 			require("tsht").config.hint_keys = { "h", "j", "f", "d", "n", "v", "s", "l", "a" }
 		end
-
 	},
-
 	{
 		'windwp/nvim-autopairs',
 		config = function()
@@ -342,7 +303,6 @@ require('lazy').setup({
 			require("configs.autotag")
 		end,
 		event = 'InsertEnter'
-
 	},
 	{
 		"akinsho/toggleterm.nvim",
@@ -350,20 +310,17 @@ require('lazy').setup({
 			require("configs.toggle_term")
 		end
 	},
-
 	{ 'michaelb/sniprun',         build = 'bash ./install.sh' },
 	{
 		'junegunn/fzf',
 		event = 'BufRead',
-		build =
-		":call fzf#install()",
+		build = ":call fzf#install()",
 		config = function()
 			require 'sniprun'.setup({ display = { "Terminal" }, })
 		end
 	},
 	{ 'junegunn/fzf.vim',         event = 'BufRead' },
 	{ 'wookayin/fzf-ripgrep.vim', event = 'BufRead' },
-
 	{
 		"folke/twilight.nvim",
 		config = function()
@@ -371,22 +328,17 @@ require('lazy').setup({
 		end,
 		dependencies = {
 			{
-				{
-					"folke/zen-mode.nvim",
-					config = function()
-						require("zen-mode").setup {}
-					end
-				},
-			}
+				"folke/zen-mode.nvim",
+				config = function()
+					require("zen-mode").setup {}
+				end
+			},
 		},
 		keys = {
 			{ 'T', ':lua require("twilight").toggle() <CR>', noremap = true, silent = true, }
 		}
-
-
 	},
 	"haringsrob/nvim_context_vt",
-	-- theme
 	{
 		'laytan/tailwind-sorter.nvim',
 		dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim' },
@@ -409,13 +361,13 @@ require('lazy').setup({
 			require("configs.lualine")
 		end
 	},
-	'romgrk/barbar.nvim', -- tab line
+	'romgrk/barbar.nvim',
 	{
 		"cuducos/yaml.nvim",
-		ft = { "yaml" }, -- optional
+		ft = { "yaml" },
 		dependencies = {
 			"nvim-treesitter/nvim-treesitter",
-			"nvim-telescope/telescope.nvim", -- optional
+			"nvim-telescope/telescope.nvim",
 		},
 	},
 	{
@@ -423,41 +375,155 @@ require('lazy').setup({
 		config = function()
 			require('pretty-fold').setup()
 		end
-
 	},
-
 	'stevearc/dressing.nvim',
-	--LSP
+
+	-- LSP 설정 (순서가 중요함)
+	{
+		"williamboman/mason.nvim",
+		lazy = false,
+		priority = 100,
+		config = function()
+			require("mason").setup({
+				ui = {
+					border = "rounded"
+				}
+			})
+		end,
+	},
+	{
+		"williamboman/mason-lspconfig.nvim",
+		lazy = false,
+		priority = 99,
+		dependencies = { "williamboman/mason.nvim" },
+		config = function()
+			require("mason-lspconfig").setup({
+				ensure_installed = { "rust_analyzer" }
+			})
+			-- configs.mason-lspconfig가 있다면 여기서도 호출
+			-- require("configs.mason-lspconfig")
+		end,
+	},
 	{
 		'neovim/nvim-lspconfig',
-		event = "VeryLazy",
+		lazy = false,
+		priority = 98,
 		dependencies = {
-			{
-				'mrcjkb/rustaceanvim',
-				version = '^4', -- Recommended
-				ft = { 'rust' },
-				enabled = true,
-			},
-			{
-				"williamboman/mason-lspconfig.nvim",
-				config = function()
-					require("configs.mason-lspconfig")
-				end,
-				lazy = true,
-				enabled = true,
-				dependencies = {
-					{
-						"williamboman/mason.nvim",
-						opts = {
-							ensure_installed = { "clang", "lua-language-server", "tsserver", "codelldb" }
-						},
-
-
-					},
-				}
-			},
+			"williamboman/mason.nvim",
+			"williamboman/mason-lspconfig.nvim",
 		}
 	},
+
+	{
+		'mrcjkb/rustaceanvim',
+		version = '^6',
+		ft = { 'rust' },
+		init = function()
+			vim.g.rustaceanvim = {
+				tools = {},
+				server = {
+					-- rust-analyzer 경로를 명시적으로 지정
+					cmd = function()
+						-- 1. Mason 설치 경로 확인
+						local mason_path = vim.fn.stdpath("data") .. "/mason/bin/rust-analyzer"
+						if vim.fn.executable(mason_path) == 1 then
+							return { mason_path }
+						end
+
+						-- 2. 시스템 rust-analyzer 사용
+						return { "rust-analyzer" }
+					end,
+					on_attach = function(client, bufnr)
+						local bufmap = function(mode, lhs, rhs)
+							vim.keymap.set(mode, lhs, rhs, { buffer = bufnr })
+						end
+						bufmap("n", "<leader>r", "<cmd>RustLsp runnables<CR>")
+						bufmap("n", "<leader>a", "<cmd>RustLsp codeAction<CR>")
+						bufmap("n", "K", "<cmd>RustLsp hover actions<CR>")
+					end,
+					default_settings = {
+						['rust-analyzer'] = {
+							cargo = {
+								allFeatures = true,
+								loadOutDirsFromCheck = true,
+							},
+							procMacro = {
+								enable = true,
+							},
+							checkOnSave = {
+								command = "clippy",
+							},
+						},
+					},
+				},
+				dap = {
+					adapter = function()
+						local has_config, rust_config = pcall(require, "rustaceanvim.config")
+						if not has_config then
+							return false
+						end
+
+						local joinpath = function(...)
+							if vim.fs and vim.fs.joinpath then
+								return vim.fs.joinpath(...)
+							end
+							return table.concat({ ... }, "/")
+						end
+
+						local has_mason, mason_registry = pcall(require, "mason-registry")
+						if has_mason and mason_registry.is_installed("codelldb") then
+							local ok_pkg, codelldb_package = pcall(mason_registry.get_package, "codelldb")
+							if ok_pkg and codelldb_package and codelldb_package.get_install_path then
+								local shell = require("rustaceanvim.shell")
+								local mason_codelldb_path = joinpath(codelldb_package:get_install_path(), "extension")
+								local codelldb_path = joinpath(mason_codelldb_path, "adapter", "codelldb")
+								local liblldb_path = joinpath(mason_codelldb_path, "lldb", "lib", "liblldb")
+								if shell.is_windows() then
+									codelldb_path = codelldb_path .. ".exe"
+									liblldb_path = joinpath(mason_codelldb_path, "lldb", "bin", "liblldb.dll")
+								else
+									local suffix = shell.is_macos() and ".dylib" or ".so"
+									liblldb_path = liblldb_path .. suffix
+								end
+								return rust_config.get_codelldb_adapter(codelldb_path, liblldb_path)
+							end
+						end
+
+						if vim.fn.executable("codelldb") == 1 then
+							return {
+								type = "server",
+								host = "127.0.0.1",
+								port = "${port}",
+								executable = {
+									command = "codelldb",
+									args = { "--port", "${port}" },
+								},
+							}
+						end
+
+						local has_lldb_dap = vim.fn.executable("lldb-dap") == 1
+						local has_lldb_vscode = vim.fn.executable("lldb-vscode") == 1
+						if not has_lldb_dap and not has_lldb_vscode then
+							return false
+						end
+
+						local command = has_lldb_dap and "lldb-dap" or "lldb-vscode"
+						return {
+							type = "executable",
+							command = command,
+							args = {},
+						}
+					end,
+				},
+			}
+		end,
+	}, {
+	'rust-lang/rust.vim',
+	config = function()
+		vim.g.rustfmt_autosave = 1
+	end,
+	ft = { 'rust' },
+},
 
 	{
 		'pmizio/typescript-tools.nvim',
@@ -467,7 +533,6 @@ require('lazy').setup({
 		end,
 		enabled = true,
 	},
-
 	{
 		"glepnir/lspsaga.nvim",
 		event = 'BufRead',
@@ -503,23 +568,23 @@ require('lazy').setup({
 		config = function()
 			require("configs.lua_snip")
 		end
-	}, -- snippetet
+	},
 	{
 		"rafamadriz/friendly-snippets",
 		event = 'InsertEnter',
 		pin = "true"
 	},
 	"lukas-reineke/lsp-format.nvim",
-
 	{
 		"SmiteshP/nvim-navic",
 		config = function()
 			require("configs.navic")
 		end
 	},
-	--language setting
+
+	-- 기타 언어별 설정
 	'prisma/vim-prisma',
-	{ 'TimUntersberger/neogit', dependencies = 'nvim-lua/plenary.nvim' },
+	{ 'TimUntersberger/neogit',      dependencies = 'nvim-lua/plenary.nvim' },
 	{
 		'rmagatti/auto-session',
 		config = function()
@@ -532,7 +597,7 @@ require('lazy').setup({
 	{
 		"cbochs/grapple.nvim",
 		opts = {
-			scope = "git", -- also try out "git_branch"
+			scope = "git",
 		},
 		event = { "BufReadPost", "BufNewFile" },
 		cmd = "Grapple",
@@ -542,13 +607,6 @@ require('lazy').setup({
 			{ "<leader>ge", "<cmd>Grapple cycle_tags next<cr>", desc = "Grapple cycle next tag" },
 			{ "<leader>gn", "<cmd>Grapple cycle_tags prev<cr>", desc = "Grapple cycle next tag" }
 		},
-	},
-	{
-		'rust-lang/rust.vim',
-		config = function()
-			vim.g.rustfmt_autosave = 1
-		end,
-		ft = { 'rust' },
 	},
 	{
 		'wuelnerdotexe/vim-astro',
@@ -580,149 +638,117 @@ require('lazy').setup({
 			require("lspconfig").denols.setup({
 				capabilities = require('cmp_nvim_lsp').default_capabilities(),
 				root_dir = require("lspconfig").util.root_pattern("deno.json", "deno.jsonc"),
-
 			})
 		end,
 		ft = "typescriptreact,typescript,javascript,javascriptreact"
-
 	},
-	-- lazy.nvim
 	{
 		"folke/noice.nvim",
 		enabled = true,
 		event = "VeryLazy",
-		opts = {
-			-- add any options here
-		},
+		opts = {},
 		config = function()
 			require("configs.noice")
 		end,
 		dependencies = {
-			-- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
 			"MunifTanjim/nui.nvim",
-			-- OPTIONAL:
-			--   `nvim-notify` is only needed, if you want to use the notification view.
-			--   If not available, we use `mini` as the fallback
 			"rcarriga/nvim-notify",
 		},
-		{
-			"kylechui/nvim-surround",
-			version = "*", -- Use for stability; omit to use `main` branch for the latest features
-			event = "VeryLazy",
-			config = function()
-				require("nvim-surround").setup({
-					-- Configuration here, or leave empty to use defaults
-					keymaps = {
-						visual = "'",
-						visual_line = "'g",
-					}
-				})
-			end
-		},
-		{
-			"danymat/neogen",
-			config = function()
-				require('neogen').setup({ snippet_engine = "luasnip" })
-			end,
-			version = "*",
-			event = 'BufRead',
-		},
-		{
-			"akinsho/flutter-tools.nvim",
-			dependencies = { "nvim-lua/plenary.nvim", "stevearc/dressing.nvim" },
-			config = function()
-				require('flutter-tools').setup {
-					-- (uncomment below line for windows only)
-					-- flutter_path = "home/flutter/bin/flutter.bat",
-
-					debugger = {
-						-- make these two params true to enable debug mode
-						enabled = false,
-						run_via_dap = false,
-						register_configurations = function(_)
-							require("dap").adapters.dart = {
-								type = "executable",
-								command = vim.fn.stdpath("data") .. "/mason/bin/dart-debug-adapter",
-								args = { "flutter" }
-							}
-
-							require("dap").configurations.dart = {
-								{
-									type = "dart",
-									request = "launch",
-									name = "Launch flutter",
-									dartSdkPath = 'home/flutter/bin/cache/dart-sdk/',
-									flutterSdkPath = "home/flutter",
-									program = "${workspaceFolder}/lib/main.dart",
-									cwd = "${workspaceFolder}",
-								}
-							}
-							-- uncomment below line if you've launch.json file already in your vscode setup
-							-- require("dap.ext.vscode").load_launchjs()
-						end,
-					},
-					dev_log = {
-						-- toggle it when you run without DAP
-						enabled = false,
-						open_cmd = "tabedit",
-					},
-					lsp = {
-						on_attach = require("lvim.lsp").common_on_attach,
-						capabilities = require("lvim.lsp").default_capabilities,
-					},
-
+	},
+	{
+		"kylechui/nvim-surround",
+		version = "*",
+		event = "VeryLazy",
+		config = function()
+			require("nvim-surround").setup({
+				keymaps = {
+					visual = "'",
+					visual_line = "'g",
 				}
-			end
-		},
-		-- for dart syntax hightling
-		{
-			"dart-lang/dart-vim-plugin"
-		},
-
-		{
-			"yetone/avante.nvim",
-			event = "VeryLazy",
-			version = false, -- Set this to "*" to always pull the latest release version, or set it to false to update to the latest code changes.
-			opts = {
-			},
-
-			-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
-			build = "make",
-			-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
-			dependencies = {
-				"nvim-treesitter/nvim-treesitter",
-				"stevearc/dressing.nvim",
-				"nvim-lua/plenary.nvim",
-				"MunifTanjim/nui.nvim",
-				--- The below dependencies are optional,
-				"echasnovski/mini.pick", -- for file_selector provider mini.pick
-				"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
-				"hrsh7th/nvim-cmp",  -- autocompletion for avante commands and mentions
-				"ibhagwan/fzf-lua",  -- for file_selector provider fzf
-				"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
-				"zbirenbaum/copilot.lua", -- for providers='copilot'
-				{
-					-- support for image pasting
-					"HakonHarnes/img-clip.nvim",
-					event = "VeryLazy",
-					opts = {
-						-- recommended settings
-						default = {
-							embed_image_as_base64 = false,
-							prompt_for_file_name = false,
-							drag_and_drop = {
-								insert_mode = true,
-							},
-							-- required for Windows users
-							use_absolute_path = true,
+			})
+		end
+	},
+	{
+		"danymat/neogen",
+		config = function()
+			require('neogen').setup({ snippet_engine = "luasnip" })
+		end,
+		version = "*",
+		event = 'BufRead',
+	},
+	{
+		"akinsho/flutter-tools.nvim",
+		dependencies = { "nvim-lua/plenary.nvim", "stevearc/dressing.nvim" },
+		config = function()
+			require('flutter-tools').setup {
+				debugger = {
+					enabled = false,
+					run_via_dap = false,
+					register_configurations = function(_)
+						require("dap").adapters.dart = {
+							type = "executable",
+							command = vim.fn.stdpath("data") .. "/mason/bin/dart-debug-adapter",
+							args = { "flutter" }
+						}
+						require("dap").configurations.dart = {
+							{
+								type = "dart",
+								request = "launch",
+								name = "Launch flutter",
+								dartSdkPath = 'home/flutter/bin/cache/dart-sdk/',
+								flutterSdkPath = "home/flutter",
+								program = "${workspaceFolder}/lib/main.dart",
+								cwd = "${workspaceFolder}",
+							}
+						}
+					end,
+				},
+				dev_log = {
+					enabled = false,
+					open_cmd = "tabedit",
+				},
+				lsp = {
+					on_attach = require("lvim.lsp").common_on_attach,
+					capabilities = require("lvim.lsp").default_capabilities,
+				},
+			}
+		end
+	},
+	{
+		"dart-lang/dart-vim-plugin"
+	},
+	{
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		version = false,
+		opts = {},
+		build = "make",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			"echasnovski/mini.pick",
+			"nvim-telescope/telescope.nvim",
+			"hrsh7th/nvim-cmp",
+			"ibhagwan/fzf-lua",
+			"nvim-tree/nvim-web-devicons",
+			"zbirenbaum/copilot.lua",
+			{
+				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
+				opts = {
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
 						},
+						use_absolute_path = true,
 					},
 				},
-
-			}
-		},
-		{ "nvim-tree/nvim-web-devicons", opts = {} },
-
-	}
-
+			},
+		}
+	},
+	{ "nvim-tree/nvim-web-devicons", opts = {} },
 }, { defaults = { lazy = true } })

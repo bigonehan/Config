@@ -17,10 +17,16 @@ require('mason-lspconfig').setup({
 	},
 
 	handlers = {
-		function(server_name)
-			require("lspconfig")[server_name].setup({ on_attach = on_attach, capabilities = capabilities })
-		end,
-		["lua_ls"] = function()
+	function(server_name)
+			-- rust_analyzer는 rustaceanvim이 처리하므로 건너뛰기
+			if server_name == "rust_analyzer" then
+				return
+			end
+			require("lspconfig")[server_name].setup({ 
+				on_attach = on_attach, 
+				capabilities = capabilities 
+			})
+		end,	["lua_ls"] = function()
 			require("lspconfig").lua_ls.setup({
 				on_attach = on_attach,
 				capabilities = capabilities,
