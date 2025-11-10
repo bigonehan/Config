@@ -4,6 +4,15 @@ require("noice").setup({
 			enter = true,
 		},
 	},
+	routes = {
+    {
+      filter = {
+        event = "notify",
+        find = "NeoCodeium: Server started",
+      },
+      opts = { skip = true },
+    },
+  },
 	lsp = {
 		-- override markdown rendering so that **cmp** and other plugins use **Treesitter**
 		override = {
