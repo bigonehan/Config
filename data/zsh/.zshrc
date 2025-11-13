@@ -294,3 +294,6 @@ alias cdoa='cd /home/tree/project/oneMono/packages/adapters'
 alias cdos='cd /home/tree/project/oneMono/packages/services'
 alias cdod='cd /home/tree/project/oneMono/packages/domains'
 alias cdoi='cd /home/tree/project/oneMono/packages/infras'
+# codex 
+alias onecode="/home/tree/project/oneMono/app/script/projectManager/scripts/run-one-project.sh"
+alias onegrist="/home/tree/project/oneMono/app/script/projectManager/scripts/list-grist-rows.sh 13"
