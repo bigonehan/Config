@@ -1,13 +1,4 @@
 {
   "mcpServers": {
-    "tmux-controller": {
-      "command": [
-        "bun",
-        "run",
-        "src/tmux-mcp-server.ts"
-      ],
-      "cwd": "/home/tree/project/oneMono/app/script/projectManager",
-      "autoRestart": true
-    }
-  }
+ 
 }

@@ -296,4 +296,5 @@ alias cdod='cd /home/tree/project/oneMono/packages/domains'
 alias cdoi='cd /home/tree/project/oneMono/packages/infras'
 # codex 
 alias onecode="/home/tree/project/oneMono/app/script/projectManager/scripts/run-one-project.sh"
-alias onegrist="/home/tree/project/oneMono/app/script/projectManager/scripts/list-grist-rows.sh 13"
+alias onegrist="/home/tree/project/oneMono/app/script/projectManager/scripts/list-grist-rows.sh table13"
+
