@@ -1,21 +1,20 @@
-services: 
-  n8n:
-    build:
-      context: .
-      dockerfile: Dockerfile-n8n
+ services:
+   n8n:
+    build: .
+    container_name: n8n-playwright
     ports:
       - "5678:5678"
     volumes:
-      - ./n8n/data:/home/node/.n8n
-      - ./n8n/shared:/home/node/shared
+      - ./n8n/data:/root/.n8n
+      - ./n8n/shared:/root/shared
     environment:
-      - GENERIC_TIMEZONE=Asia/Seoul
-      - N8N_AUTH_DISABLED=true
-      - N8N_BASIC_AUTH_ACTIVE=false
-      - N8N_BASIC_AUTH_USER=tende
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=tree
       - N8N_BASIC_AUTH_PASSWORD=1111
-    restart: always
-  grist:
+      - N8N_HOST=0.0.0.0
+      - WEBHOOK_URL=http://localhost:5678/
+    restart: unless-stopped
+ grist:
     image: gristlabs/grist
     restart: always
     ports:
@@ -25,3 +24,4 @@ services:
     environment:
       - GRIST_DEFAULT_EMAIL=tendertree@gmail.com
       - GRIST_SESSION_SECRET=your-secret-key-here
+

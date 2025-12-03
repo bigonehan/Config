@@ -1,0 +1,35 @@
+FROM mcr.microsoft.com/playwright:v1.48.2-jammy
+
+# 환경변수 설정
+ENV NODE_ENV=production
+ENV N8N_CUSTOM_EXTENSIONS="/root/.n8n/nodes"
+ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
+
+# n8n 설치
+RUN npm install -g n8n
+
+# n8n 커스텀 노드 디렉토리 생성
+RUN mkdir -p /root/.n8n/nodes
+
+# Playwright 커스텀 노드 설치
+WORKDIR /root/.n8n/nodes
+RUN npm install n8n-nodes-playwright-scripts
+
+# chrome-linux 심볼릭 링크 생성 (chrome-linux64 -> chrome-linux)
+RUN cd /root/.n8n/nodes/node_modules/n8n-nodes-playwright-scripts/dist/nodes/browsers/chromium-1200 && \
+    ln -s chrome-linux64 chrome-linux
+
+# shared 디렉토리 생성
+RUN mkdir -p /root/shared
+
+# n8n 데이터 디렉토리를 볼륨으로 설정
+VOLUME ["/root/.n8n", "/root/shared"]
+
+# n8n 포트 노출
+EXPOSE 5678
+
+# 작업 디렉토리
+WORKDIR /root
+
+# n8n 실행
+CMD ["n8n"]
