@@ -12,14 +12,7 @@ end
 vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({
-	{
-		dir = "/home/tree/config/scripts/monogen",
-		name = "monogen",
-		lazy = false,
-		config = function()
-			require("monogen").setup()
-		end,
-	},
+	
 	{
 		"m4xshen/hardtime.nvim",
 		lazy = false,
