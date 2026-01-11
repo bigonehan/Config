@@ -80,6 +80,7 @@ require('lazy').setup({
 	{
 		"monkoose/neocodeium",
 		event = "VeryLazy",
+		enabled = false,
 		config = function()
 			local neocodeium = require("neocodeium")
 			neocodeium.setup()
@@ -635,6 +636,7 @@ require('lazy').setup({
 		end,
 		ft = "typescriptreact,typescript,javascript,javascriptreact"
 	},
+	-- message bar
 	{
 		"folke/noice.nvim",
 		enabled = true,
