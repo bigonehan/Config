@@ -25,7 +25,11 @@ alias zed "env WAYLAND_DISPLAY= zed"
 alias mygen "bun ~/config/scripts/gen.ts"
 alias onecode "/home/tree/project/oneMono/app/script/projectManager/scripts/run-one-project.sh"
 alias onegrist "/home/tree/project/oneMono/app/script/projectManager/scripts/list-grist-rows.sh table13"
-
+## functions
+# notify
+function nf --wraps notify.fish
+    $__fish_config_dir/functions/notify.fish $argv
+end
 # zsh에서 <commit> 자리 채우는 형태는 fish 함수로 구현
 function gsho
   git show $argv --stat
@@ -131,6 +135,5 @@ jj util completion fish | source
 if not pgrep -f "ollama serve" >/dev/null
   nohup ollama serve > ~/.ollama.log 2>&1 &
 end
-
 
 
