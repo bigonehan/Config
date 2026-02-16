@@ -1,8 +1,6 @@
 if status is-interactive
 # Commands to run in interactive sessions can go here
 end
-starship init fish | source
-=======
 # ~/.config/fish/config.fish
 
 # -----------------------------
@@ -125,11 +123,14 @@ function up
   autoUpdate
 end
 
+# jujutsu setup 
+jj util completion fish | source
 # -----------------------------
 # ollama auto-start
 # -----------------------------
 if not pgrep -f "ollama serve" >/dev/null
   nohup ollama serve > ~/.ollama.log 2>&1 &
 end
+
 
 
