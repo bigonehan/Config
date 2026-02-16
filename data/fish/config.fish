@@ -25,6 +25,9 @@ alias zed "env WAYLAND_DISPLAY= zed"
 alias mygen "bun ~/config/scripts/gen.ts"
 alias onecode "/home/tree/project/oneMono/app/script/projectManager/scripts/run-one-project.sh"
 alias onegrist "/home/tree/project/oneMono/app/script/projectManager/scripts/list-grist-rows.sh table13"
+# tmux work aliase
+alias st create_task_pane
+alias smt create_multiple_task
 ## functions
 # notify
 function nf --wraps notify.fish
