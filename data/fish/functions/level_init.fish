@@ -23,12 +23,17 @@ function level_init
     # ========================================
     # 2. 사용자 입력 받기
     # ========================================
-    read -P "📦 패키지 이름 (예: auth, payment): " package_name
-    if test -z "$package_name"
-        set_color red
-        echo "❌ 패키지 이름은 필수입니다"
-        set_color normal
-        return 1
+    set package_name $argv[1]
+    if test -n "$package_name"
+        echo "📦 패키지 이름: $package_name (폴더명 자동 연동)"
+    else
+        read -P "📦 패키지 이름 (예: auth, payment): " package_name
+        if test -z "$package_name"
+            set_color red
+            echo "❌ 패키지 이름은 필수입니다"
+            set_color normal
+            return 1
+        end
     end
 
     read -P "📝 이 패키지의 기능 설명: " package_description
@@ -39,7 +44,12 @@ function level_init
         return 1
     end
 
-    set target_dir "$target_base/$package_name"
+    set current_dir_name (basename "$target_base")
+    if test "$current_dir_name" = "$package_name"
+        set target_dir "$target_base"
+    else
+        set target_dir "$target_base/$package_name"
+    end
 
     echo ""
     set_color yellow
@@ -49,20 +59,27 @@ function level_init
     # ========================================
     # 3. 폴더 생성 및 이동
     # ========================================
-    if test -d "$target_dir"
-        set_color red
-        echo "❌ 이미 존재하는 폴더입니다: $target_dir"
+    if test "$target_dir" = "$target_base"
+        set_color green
+        echo "✅ 현재 폴더 사용: $target_dir"
         set_color normal
-        return 1
+        echo ""
+    else
+        if test -d "$target_dir"
+            set_color red
+            echo "❌ 이미 존재하는 폴더입니다: $target_dir"
+            set_color normal
+            return 1
+        end
+
+        mkdir -p $target_dir
+        cd $target_dir
+
+        set_color green
+        echo "✅ 폴더 생성: $target_dir"
+        set_color normal
+        echo ""
     end
-
-    mkdir -p $target_dir
-    cd $target_dir
-
-    set_color green
-    echo "✅ 폴더 생성: $target_dir"
-    set_color normal
-    echo ""
 
     # ========================================
     # 4. spec.yaml 템플릿 복사

@@ -1,12 +1,12 @@
 # ============================================================
 # level_start
 # 진입점 함수
-# 현재 상태를 자동 감지하여 적절한 단계부터 시작
+# 1. 프로젝트 폴더명 입력 → 폴더 생성 → 이동
+# 2. jj repo 확인 및 생성
+# 3. 현재 상태 감지 → 적절한 단계부터 시작
 #
 # 사용법:
-#   cd packages/feature   && level_start  # spec.yaml 없음 → level_init부터
-#   cd packages/feature/auth && level_start  # spec.yaml 있음 → level_plan부터
-#   cd packages/feature/auth && level_start  # task.yaml 있음 → level_work부터
+#   level_start   # 어디서든 실행
 # ============================================================
 function level_start
     set_color cyan
@@ -17,7 +17,43 @@ function level_start
     echo ""
 
     # ========================================
-    # jj repo 확인
+    # 1. 프로젝트 폴더 생성 및 이동
+    # ========================================
+    read -P "📁 프로젝트 폴더명 (현재 폴더 사용: '.'): " project_name
+    set init_package_name ""
+
+    if test "$project_name" != "."
+        if test -z "$project_name"
+            set_color red
+            echo "❌ 폴더명을 입력하세요"
+            set_color normal
+            return 1
+        end
+
+        if test -d "$project_name"
+            set_color yellow
+            echo "⚠️  이미 존재하는 폴더: $project_name"
+            set_color normal
+            read -P "   기존 폴더로 이동하시겠습니까? (y/N): " use_existing
+            if test "$use_existing" != "y"
+                return 1
+            end
+        else
+            mkdir -p $project_name
+            set_color green
+            echo "✅ 폴더 생성: $project_name"
+            set_color normal
+        end
+
+        cd $project_name
+        set init_package_name $project_name
+    end
+
+    echo "📍 현재 위치: "(pwd)
+    echo ""
+
+    # ========================================
+    # 2. jj repo 확인 및 생성
     # ========================================
     jj root 2>/dev/null 1>/dev/null
     if test $status -ne 0
@@ -35,15 +71,7 @@ function level_start
             return 1
         end
 
-        # git 저장소가 있는지 확인
-        if test -d .git
-            # git 저장소 위에 jj 초기화
-            jj git init --colocate
-        else
-            # 새로 생성
-            jj git init --colocate
-            git init 2>/dev/null
-        end
+        jj git init --colocate
 
         if test $status -ne 0
             set_color red
@@ -56,23 +84,24 @@ function level_start
         echo "✅ jj 저장소 생성 완료: "(jj root)
         set_color normal
         echo ""
+    else
+        echo "✅ jj 저장소 확인: "(jj root)
+        echo ""
     end
 
     # ========================================
-    # 현재 상태 감지
+    # 3. 현재 상태 감지
     # ========================================
     set has_spec (test -f spec.yaml; and echo "true"; or echo "false")
-    set has_plan (test -f plan.yaml; and echo "true"; or echo "false")
     set has_task (test -f task.yaml; and echo "true"; or echo "false")
 
     echo "현재 상태:"
     echo "  spec.yaml : $has_spec"
-    echo "  plan.yaml : $has_plan"
     echo "  task.yaml : $has_task"
     echo ""
 
     # ========================================
-    # 1단계: 패키지 초기화 (spec.yaml 없을 때)
+    # 4. 패키지 초기화 (spec.yaml 없을 때)
     # ========================================
     if test "$has_spec" = "false"
         set_color yellow
@@ -80,7 +109,11 @@ function level_start
         set_color normal
         echo ""
 
-        level_init
+        if test -n "$init_package_name"
+            level_init $init_package_name
+        else
+            level_init
+        end
         if test $status -ne 0
             set_color red
             echo "❌ level_init 실패"
@@ -103,7 +136,7 @@ function level_start
     end
 
     # ========================================
-    # 2단계: 계획 수립 (task.yaml 없을 때)
+    # 5. 계획 수립 (task.yaml 없을 때)
     # ========================================
     if test "$has_task" = "false"
         set_color yellow
@@ -134,7 +167,7 @@ function level_start
     end
 
     # ========================================
-    # 3단계: 실행
+    # 6. 실행
     # ========================================
     set_color yellow
     echo "⚙️  level_work 시작"
@@ -151,7 +184,7 @@ function level_start
     end
 
     # ========================================
-    # 4단계: 피드백
+    # 7. 피드백
     # ========================================
     set_color yellow
     echo "📝 level_feedback 시작"

@@ -15,11 +15,13 @@ function init_plan_yaml
     cp $template_path ./plan.yaml
     echo "✅ plan.yaml 템플릿 복사 완료"
 
+    # spec_context 주입
     get_spec_context
     if test $status -ne 0
         return 1
     end
 
+    # current_location 주입
     set current_location (python3 -c "
 import yaml
 with open('spec.yaml') as f:
@@ -38,5 +40,3 @@ with open('plan.yaml', 'w') as f:
     echo "✅ spec_context 주입 완료"
     echo ""
 end
-
-
