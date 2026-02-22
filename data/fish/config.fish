@@ -42,16 +42,17 @@ end
 alias glo 'git log --graph --format=format:"%C(bold blue)%h%C(reset) - %C(bold green)(%ar)%C(reset) %C(white)%an%C(reset)%C(bold yellow)%d%C(reset) %C(dim white)- %s%C(reset)" --all'
 
 # tmux helpers
-alias tmn "tmux new -s"
-alias tmg "tmux attach-session -t"
-alias tmk "tmux kill-session -t"
-alias tmc "tmux switch-client -t"
+set -gx TMUX_CONF /home/tree/Config/data/tmux/tmux.conf
+alias tmn "tmux -f $TMUX_CONF new -s"
+alias tmg "tmux -f $TMUX_CONF attach-session -t"
+alias tmk "tmux -f $TMUX_CONF kill-session -t"
+alias tmc "tmux -f $TMUX_CONF switch-client -t"
 
 function tmcc
-  if tmux has-session -t claude 2>/dev/null
-    tmux attach -t claude
+  if tmux -f $TMUX_CONF has-session -t claude 2>/dev/null
+    tmux -f $TMUX_CONF attach -t claude
   else
-    tmux new -s claude
+    tmux -f $TMUX_CONF new -s claude
   end
 end
 
@@ -138,5 +139,4 @@ jj util completion fish | source
 if not pgrep -f "ollama serve" >/dev/null
   nohup ollama serve > ~/.ollama.log 2>&1 &
 end
-
 

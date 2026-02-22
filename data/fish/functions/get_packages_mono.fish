@@ -1,13 +1,7 @@
 function get_packages_mono
-    # 1. jj root 찾기 (현재 위치에서 상위로 탐색)
-    set jj_root (jj root 2>/dev/null)
-    
-    if test -z "$jj_root"
-        # 모노레포 루트 없음
-        echo ""
-        return 0
-    end
-    
+    # 1. cwd 기준 jj 대상 경로 계산
+    set jj_root (flow_resolve_jj_target_from_cwd (pwd))
+
     # 2. packages/ 폴더 존재 확인
     if not test -d "$jj_root/packages"
         echo ""

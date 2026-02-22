@@ -57,7 +57,7 @@ new_features:
 - 이미 spec.yaml feature에 있는 항목은 제외
 - 날짜는 반드시 포함"
 
-    codex "$feature_prompt" > /tmp/new_features.yaml
+    codex exec "$feature_prompt" > /tmp/new_features.yaml
 
     if test $status -ne 0
         set_color red
@@ -143,7 +143,7 @@ feat: 티켓 소각 시스템 구현
 영향 패키지: @feature/ticket
 관련 기능: 소각 시스템"
 
-    set commit_message (codex "$commit_prompt")
+    set commit_message (codex exec "$commit_prompt")
 
     if test $status -ne 0
         set_color yellow

@@ -13,7 +13,7 @@ function collect_features
         echo "── 기능 $feature_count 입력 ──────────────────────"
         set_color normal
 
-        read -P "📌 기능명 (완료: 'done'): " feature_name
+        read -P "📌 기능명 (완료: 'done', 건너뛰기: 'pass'): " feature_name
 
         if test "$feature_name" = "done"
             if test $feature_count -eq 1
@@ -23,6 +23,13 @@ function collect_features
                 set feature_count 0
                 continue
             end
+            break
+        end
+
+        if test "$feature_name" = "pass"
+            set_color yellow
+            echo "⏭️  feature 입력을 건너뛰고 다음 단계로 진행합니다"
+            set_color normal
             break
         end
 
@@ -97,4 +104,3 @@ print(f'   ✅ 기능 추가: {feature_name}')
         echo ""
     end
 end
-

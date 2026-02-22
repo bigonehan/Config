@@ -168,7 +168,7 @@ feature:
 - YAML 문법을 정확히 지킬 것
 - 없는 패키지를 임의로 만들지 말 것"
 
-    codex "$prompt"
+    codex exec "$prompt"
 
     if test $status -ne 0
         set_color red

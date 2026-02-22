@@ -11,7 +11,11 @@ function create_task_pane --description "Split tmux pane, create jj workspace tN
         return 2
     end
 
-    set -l root (pwd)
+    set -l root (flow_ensure_jj_repo_for_cwd (pwd))
+    if test $status -ne 0 -o -z "$root"
+        echo "Error: failed to prepare jj repo from cwd."
+        return 1
+    end
     set -l base (basename $root)
     set -l parent (dirname $root)
     set -l ws_name "t$n"
@@ -24,7 +28,7 @@ function create_task_pane --description "Split tmux pane, create jj workspace tN
 
     set -l prompt "task.md 파일($task_abs)을 읽고 task $n 의 작업을 구현하라"
 
-    set -l cmd "jj workspace add $ws_name; and cd \"$ws_dir\"; and jj new; and codex \"$prompt\""
+    set -l cmd "cd \"$root\"; and jj workspace add $ws_name; and cd \"$ws_dir\"; and jj new; and codex \"$prompt\""
 
     tmux send-keys "$cmd" C-m
 end

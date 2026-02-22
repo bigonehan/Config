@@ -6,7 +6,28 @@
 # ============================================================
 function run_task_parallel
     set task_ids $argv
-    set jj_root (jj root 2>/dev/null)
+    set jj_root (flow_ensure_jj_repo_for_cwd (pwd))
+    if test $status -ne 0 -o -z "$jj_root"
+        set_color red
+        echo "❌ jj 저장소 준비 실패: "(pwd)
+        set_color normal
+        return 1
+    end
+    cd $jj_root
+    set dev_language "TypeScript"
+
+    if test -f spec.yaml
+        set dev_language (python3 -c "
+import yaml
+with open('spec.yaml') as f:
+    spec = yaml.safe_load(f) or {}
+language = (spec.get('language') or '').strip()
+print(language)
+" 2>/dev/null)
+    end
+    if test -z "$dev_language"
+        set dev_language "TypeScript"
+    end
 
     echo ""
     set_color cyan
@@ -42,7 +63,7 @@ for t in plan.get('tasks', []):
             set spec_content (cat spec.yaml)
         end
 
-        set task_prompt "당신은 TypeScript 개발자입니다.
+        set task_prompt "당신은 $dev_language 개발자입니다.
 아래 task를 구현하세요.
 
 ## Task
@@ -63,7 +84,7 @@ workspace: $workspace_name
         echo "   ▶ 시작: $task_id (workspace: $workspace_name)"
         begin
             cd $workspace_path
-            codex "$task_prompt"
+            codex exec "$task_prompt"
             echo $status > /tmp/task_exit_$task_id
             cd $jj_root
         end &

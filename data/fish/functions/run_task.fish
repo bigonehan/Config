@@ -30,13 +30,27 @@ for t in plan.get('tasks', []):
     end
 
     set workspace_name "ws_$task_id"
-    set jj_root (jj root 2>/dev/null)
+    set jj_root (flow_ensure_jj_repo_for_cwd (pwd))
+    if test $status -ne 0 -o -z "$jj_root"
+        set_color red
+        echo "❌ jj 저장소 준비 실패: "(pwd)
+        set_color normal
+        return 1
+    end
+    cd $jj_root
 
     # ----------------------------------------
     # jj workspace 생성
     # ----------------------------------------
-    set workspace_path "$jj_root/.workspaces/$workspace_name"
-    mkdir -p $workspace_path
+    set workspace_parent "$jj_root/.workspaces"
+    set workspace_path "$workspace_parent/$workspace_name"
+    mkdir -p $workspace_parent
+
+    # 이전 실패로 남은 stale workspace 정리
+    jj workspace forget $workspace_name 2>/dev/null
+    if test -d "$workspace_path"
+        rm -rf "$workspace_path" 2>/dev/null
+    end
 
     jj workspace add $workspace_path --name $workspace_name 2>/dev/null
     if test $status -ne 0
@@ -50,12 +64,26 @@ for t in plan.get('tasks', []):
     # ----------------------------------------
     # LLM에게 구현 요청
     # ----------------------------------------
+    set dev_language "TypeScript"
+    if test -f spec.yaml
+        set dev_language (python3 -c "
+import yaml
+with open('spec.yaml') as f:
+    spec = yaml.safe_load(f) or {}
+language = (spec.get('language') or '').strip()
+print(language)
+" 2>/dev/null)
+    end
+    if test -z "$dev_language"
+        set dev_language "TypeScript"
+    end
+
     set spec_content ""
     if test -f spec.yaml
         set spec_content (cat spec.yaml)
     end
 
-    set task_prompt "당신은 TypeScript 개발자입니다.
+    set task_prompt "당신은 $dev_language 개발자입니다.
 아래 task를 구현하세요.
 
 ## Task
@@ -74,7 +102,7 @@ workspace: $workspace_name
 - 구현 완료 후 변경된 파일 목록 출력"
 
     cd $workspace_path
-    codex "$task_prompt"
+    codex exec "$task_prompt"
     set codex_status $status
     cd $jj_root
 

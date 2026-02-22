@@ -8,7 +8,13 @@ function add_feature_to_domain
     set port_name $argv[2]   # 예: IGetGradePort
     set port_desc $argv[3]   # 예: "학생 성적 조회 Port"
 
-    set jj_root (jj root 2>/dev/null)
+    set jj_root (flow_ensure_jj_repo_for_cwd (pwd))
+    if test $status -ne 0 -o -z "$jj_root"
+        set_color red
+        echo "❌ jj 저장소 준비 실패: "(pwd)
+        set_color normal
+        return 1
+    end
 
     set pkg_type  (string replace "@" "" (string split "/" $pkg_name)[1])
     set pkg_short (string split "/" $pkg_name)[2]
@@ -41,4 +47,3 @@ with open('$spec_path', 'w') as f:
 print('✅ $port_name → $pkg_name 에 추가됨')
 " 2>&1
 end
-

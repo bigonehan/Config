@@ -61,7 +61,7 @@ result:
   suggestions:
     - \"개선 제안\""
 
-    codex "$test_prompt" > /tmp/test_result_$task_id.yaml
+    codex exec "$test_prompt" > /tmp/test_result_$task_id.yaml
 
     # 결과 파싱
     python3 -c "
@@ -117,4 +117,3 @@ exit(0 if passed else 1)
 "
     return $status
 end
-

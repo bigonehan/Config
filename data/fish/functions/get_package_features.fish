@@ -14,8 +14,8 @@ function get_package_features
         return 1
     end
 
-    # jj root 확인
-    set jj_root (jj root 2>/dev/null)
+    # cwd 기준 jj 대상 경로 계산
+    set jj_root (flow_resolve_jj_target_from_cwd (pwd))
     if test -z "$jj_root"
         return 0
     end

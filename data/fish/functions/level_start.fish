@@ -7,7 +7,6 @@
 #
 # 사용법:
 #   level_start   # 어디서든 실행
-# ============================================================
 function level_start
     set_color cyan
     echo "╔══════════════════════════════════════╗"
@@ -55,39 +54,28 @@ function level_start
     # ========================================
     # 2. jj repo 확인 및 생성
     # ========================================
-    jj root 2>/dev/null 1>/dev/null
-    if test $status -ne 0
-        set_color yellow
-        echo "⚠️  jj 저장소가 없습니다"
+    set current_dir (pwd)
+    set jj_target_dir (flow_ensure_jj_repo_for_cwd "$current_dir")
+    if test $status -ne 0 -o -z "$jj_target_dir"
+        set_color red
+        echo "❌ jj 저장소 준비 실패: $current_dir"
         set_color normal
-        echo ""
-        read -P "현재 위치에 jj 저장소를 생성하시겠습니까? (y/N): " init_jj
+        return 1
+    end
 
-        if test "$init_jj" != "y"
-            set_color red
-            echo "❌ jj 저장소 없이는 진행할 수 없습니다"
-            echo "   jj git init --colocate 으로 직접 생성하세요"
-            set_color normal
-            return 1
-        end
-
-        jj git init --colocate
-
-        if test $status -ne 0
-            set_color red
-            echo "❌ jj 저장소 생성 실패"
-            set_color normal
-            return 1
-        end
-
-        set_color green
-        echo "✅ jj 저장소 생성 완료: "(jj root)
+    set jj_target_label "현재 위치"
+    if test "$current_dir" != "$jj_target_dir"
+        set jj_target_label "모노레포 루트"
+        set_color cyan
+        echo "📦 모노레포 감지: $jj_target_dir"
         set_color normal
-        echo ""
-    else
-        echo "✅ jj 저장소 확인: "(jj root)
+        cd "$jj_target_dir"
+        echo "📍 모노레포 루트로 이동: "(pwd)
         echo ""
     end
+
+    echo "✅ jj 저장소 확인($jj_target_label): $jj_target_dir"
+    echo ""
 
     # ========================================
     # 3. 현재 상태 감지

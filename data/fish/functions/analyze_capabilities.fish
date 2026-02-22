@@ -1,7 +1,10 @@
+pabilities · FISH
+복사
+
 # ============================================================
 # analyze_capabilities
 # 패키지 feature 목록 수집 + 1단계 LLM 호출
-# 결과: /tmp/capability_check.yaml
+# 결과: /tmp/capability_check.yaml (codex가 직접 저장)
 # ============================================================
 function analyze_capabilities
     echo ""
@@ -36,18 +39,19 @@ $plan_content
 ## 현재 모노레포 패키지 및 구현된 기능
 $features_context
 
-## 출력 형식 (YAML만, 설명 금지)
+## 할 일
+분석 결과를 아래 YAML 형식으로 /tmp/capability_check.yaml 파일에 저장하세요.
 
 feature_summary:
-  - \"학생 도메인이 성적을 조회한다\"
+  - \"티켓 도메인이 소각 처리를 한다\"
 
 capabilities:
-  - domain: \"@domain/student_high\"
-    port: \"IGetGradePort\"
-    adapter: \"@adapter/student_high\"
-    description: \"고등학생 성적 조회\"
+  - domain: \"@domain/ticket\"
+    port: \"IBurnTicketPort\"
+    adapter: \"@adapter/ticket\"
+    description: \"티켓 소각 처리\"
     status: \"missing_all\"
-    reason: \"고등학생 성적 기반 할인 적용 필요\"
+    reason: \"티켓 소각 기능이 아직 없음\"
 
 ## status 기준
 - missing_all:     도메인/Port/Adapter 전부 없음
@@ -56,13 +60,23 @@ capabilities:
 
 ## 주의사항
 - 현재 패키지 목록에 없는 것만 missing으로 판단
-- 확신 없으면 exists로"
+- 확신 없으면 exists로
+- 반드시 /tmp/capability_check.yaml 파일로 저장할 것
+- YAML 형식 외 다른 텍스트 포함 금지"
 
-    codex "$pre_prompt" > /tmp/capability_check.yaml
+    codex exec "$pre_prompt"
 
     if test $status -ne 0
         set_color red
         echo "❌ 1단계 AI 분석 실패"
+        set_color normal
+        return 1
+    end
+
+    # 파일 생성 확인
+    if not test -f /tmp/capability_check.yaml
+        set_color red
+        echo "❌ capability_check.yaml 생성 안 됨"
         set_color normal
         return 1
     end
