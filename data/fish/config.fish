@@ -25,13 +25,14 @@ alias zed "env WAYLAND_DISPLAY= zed"
 alias mygen "bun ~/config/scripts/gen.ts"
 alias onecode "/home/tree/project/oneMono/app/script/projectManager/scripts/run-one-project.sh"
 alias onegrist "/home/tree/project/oneMono/app/script/projectManager/scripts/list-grist-rows.sh table13"
+alias obfa "orc build-function-auto"
 # tmux work aliase
 alias st create_task_pane
 alias smt create_multiple_task
 ## functions
 # notify
-function nf --wraps notify.fish
-    $__fish_config_dir/functions/notify.fish $argv
+function nf --wraps /home/tree/Config/data/fish/functions/notify.fish
+    /home/tree/Config/data/fish/functions/notify.fish $argv
 end
 # zsh에서 <commit> 자리 채우는 형태는 fish 함수로 구현
 function gsho
@@ -62,10 +63,9 @@ end
 set -gx LANG ko_KR.UTF-8
 set -gx LC_ALL ko_KR.UTF-8
 
-# DISPLAY (WSL)
-set -gx DISPLAY (ip route | awk '/^default/{print $3}'):0.0
-
-# ZED
+# DISPLAY (WSLg)
+set -gx DISPLAY :0
+set -gx WAYLAND_DISPLAY wayland-0# ZED
 set -gx ZED_ALLOW_EMULATED_GPU 1
 
 # ANDROID / JAVA
@@ -140,3 +140,21 @@ if not pgrep -f "ollama serve" >/dev/null
   nohup ollama serve > ~/.ollama.log 2>&1 &
 end
 
+
+# codex preflight gate + wrapper
+function codex-run
+  set override ~/ai/codex/AGENTS.override.md
+  if not test -f $override
+    echo "BLOCK: AGENTS.override.md 없음: $override"
+    return 1
+  end
+
+  set local_override_md (pwd)/AGENTS.override.md
+  set local_override (pwd)/AGENTS.override
+  test -e $local_override_md; or ln -sfn $override $local_override_md
+  test -e $local_override; or ln -sfn $override $local_override
+
+  command codex --dangerously-bypass-approvals-and-sandbox "AGENTS.override를 먼저 읽어" $argv
+end
+
+alias codex "codex-run"

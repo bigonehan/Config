@@ -276,7 +276,7 @@ $structure_list
     set_color cyan
     echo "다음 단계:"
     set_color normal
-    echo "  1. vim .agents/AGENTS.md  # 작업 가이드 상세화"
+    echo "  1. .agents/AGENTS.md 점검  # 작업 가이드 상세화"
     echo "  2. load_plan              # 기능 계획 시작"
     echo "  3. level_plan             # 의존성 분석"
     echo "  4. level_work             # 자동 구현"
