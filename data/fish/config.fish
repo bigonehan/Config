@@ -26,6 +26,7 @@ alias mygen "bun ~/config/scripts/gen.ts"
 alias onecode "/home/tree/project/oneMono/app/script/projectManager/scripts/run-one-project.sh"
 alias onegrist "/home/tree/project/oneMono/app/script/projectManager/scripts/list-grist-rows.sh table13"
 alias obfa "orc build-function-auto"
+alias codexo codex-run
 # tmux work aliase
 alias st create_task_pane
 alias smt create_multiple_task
@@ -87,6 +88,7 @@ set -gx PATH $DENO_INSTALL/bin $PATH
 
 # NVM (fish용: bass/fnm 미사용 상태라 최소 이식)
 set -gx NVM_DIR $HOME/.nvm
+set -q nvm_default_version; or set -gx nvm_default_version v25.8.1
 
 # ENCORE
 set -gx ENCORE_INSTALL /home/tree/.encore
@@ -154,7 +156,8 @@ function codex-run
   test -e $local_override_md; or ln -sfn $override $local_override_md
   test -e $local_override; or ln -sfn $override $local_override
 
-  command codex --dangerously-bypass-approvals-and-sandbox "AGENTS.override를 먼저 읽어" $argv
+  set user_msg (string join " " -- $argv)
+  set prompt "전역 설정을 먼저 읽고 다음 메시지를 plan mode로 계획을 잡은다음에 orc를 이용해서 job.md를 만들고 orc skill을 이용해서 drafts.yaml, draft_item을 넣고 병렬 처리를 한다음 orc clit로 기능 구현이 되었는지 검사해 msg: $user_msg"
+  command codex --dangerously-bypass-approvals-and-sandbox "$prompt"
 end
 
-alias codex "codex-run"
