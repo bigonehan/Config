@@ -151,13 +151,7 @@ function codex-run
     return 1
   end
 
-  set local_override_md (pwd)/AGENTS.override.md
-  set local_override (pwd)/AGENTS.override
-  test -e $local_override_md; or ln -sfn $override $local_override_md
-  test -e $local_override; or ln -sfn $override $local_override
-
   set user_msg (string join " " -- $argv)
   set prompt "전역 설정을 먼저 읽고 다음 메시지를 plan mode로 계획을 잡은다음에 orc를 이용해서 job.md를 만들고 orc skill을 이용해서 drafts.yaml, draft_item을 넣고 병렬 처리를 한다음 orc clit로 기능 구현이 되었는지 검사해 msg: $user_msg"
   command codex --dangerously-bypass-approvals-and-sandbox "$prompt"
 end
-
