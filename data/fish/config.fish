@@ -144,6 +144,9 @@ end
 
 
 # codex preflight gate + wrapper
+function codex-normal
+  command codex --dangerously-bypass-approvals-and-sandbox "$prompt"
+end
 function codex-run
   set override ~/ai/codex/AGENTS.override.md
   if not test -f $override
@@ -152,8 +155,9 @@ function codex-run
   end
 
   set user_msg (string join " " -- $argv)
-  set prompt "전역 설정을 먼저 읽고 다음 메시지를 plan mode로 계획을 잡은다음에 orc를 이용해서 job.md를 만들고 orc skill을 이용해서 drafts.yaml, draft_item을 넣고 병렬 처리를 한다음 orc clit로 기능 구현이 되었는지 검사해 msg: $user_msg"
+  set prompt "전역 설정을 먼저 읽고 다음 메시지를 plan mode로 계획을 잡은다음에 orc를 이용해서 job.md를 만들고 orc skill을 이용해서 drafts.yaml, draft_item을 넣고 병렬 처리를 한다음 orc clit로 기능 구현이 되었는지 검사해, 중간 승인 없이 진행할것 
+   msg: $user_msg"
   command codex --dangerously-bypass-approvals-and-sandbox "$prompt"
 end
-
-alias codex codex-run
+alias codex codex-normal
+alias codexo codex-run
