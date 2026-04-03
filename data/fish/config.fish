@@ -31,6 +31,15 @@ alias codexo codex-run
 alias st create_task_pane
 alias smt create_multiple_task
 ## functions
+function dir --wraps /usr/sbin/dir
+    if test (pwd -P) = /home/tree/project/extensions
+        command dir --hide=tauri-shorclip $argv
+        return
+    end
+
+    command dir $argv
+end
+
 # notify
 function nf --wraps /home/tree/Config/data/fish/functions/notify.fish
     /home/tree/Config/data/fish/functions/notify.fish $argv
@@ -155,9 +164,38 @@ function codex-run
   end
 
   set user_msg (string join " " -- $argv)
-  set prompt "~/ai/codex/AGENTS.override.md를 먼저 읽고 다음 메시지를 plan mode로 계획을 잡은다음에 orc를 이용해서 job.md를 만들고 orc skill을 이용해서 drafts.yaml, draft_item을 넣고 병렬 처리를 한다음 orc clit로 기능 구현이 되었는지 검사해, 중간 승인 없이 진행할것 
+  set prompt "~/ai/codex/AGENTS.override.md를 먼저 읽고 다음 메시지를 plan mode로 계획을 잡은다음에 작업을해 , 중간 승인 없이 진행할것"
    msg: $user_msg"
+  command codex --dangerously-bypass-approvals-and-sandbox "$prompt"
+end
+
+function codexc-run
+  set override ~/ai/codex/AGENTS.override.md
+  set skill /home/tree/ai/skills/orc_manager/SKILL.md
+  if not test -f $override
+    echo "BLOCK: AGENTS.override.md 없음: $override"
+    return 1
+  end
+  if not test -f $skill
+    echo "BLOCK: orc_manager skill 없음: $skill"
+    return 1
+  end
+
+  set user_msg (string join " " -- $argv)
+  set prompt "~/ai/codex/AGENTS.override.md를 먼저 읽고 /home/tree/ai/skills/orc_manager/SKILL.md를 사용해서 다음 작업을 수행해.
+- 먼저 plan mode로 계획을 확정한다.
+- plan 확정 직후 현재 세션을 manager session으로 고정한다.
+- manager session은 직접 구현/점검/브라우저 실행을 하지 않는다.
+- 반드시 tmux 새 session 또는 pane을 나눠 impl, qa, check, improve 역할을 분리한다.
+- 반드시 orc send-tmux 또는 기존 tmux worker wrapper로만 worker에 명령을 위임한다.
+- impl worker는 dev server를 유지한 채 완료 메시지로 URL을 회수한다.
+- qa/check worker를 별도로 열어 실제 접속 검증과 점검을 수행한다.
+- manager는 worker 결과만 믿지 말고 job.md 재확인 뒤 stage_manager_reverified까지 기록한다.
+- 위 절차를 어기면 바로 실패로 보고 수정 후 같은 절차를 다시 반복한다.
+- 중간 승인 없이 끝까지 진행한다 사용자 지시사항을 최우선시 한다..
+msg: $user_msg"
   command codex --dangerously-bypass-approvals-and-sandbox "$prompt"
 end
 alias codex codex-normal
 alias codexo codex-run
+alias codexc codexc-run
