@@ -185,8 +185,3 @@ end
 
 alias codex codex-normal
 alias codexo codex-run
-
-
-# >>> grok installer >>>
-fish_add_path $HOME/.grok/bin
-# <<< grok installer <<<
