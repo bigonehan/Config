@@ -29,7 +29,7 @@ if type -q powershell.exe
 $EncodedMessage = "__NF_ENCODED_MESSAGE__";
 $message = [Text.Encoding]::UTF8.GetString([Convert]::FromBase64String($EncodedMessage));
 $popup = New-Object -ComObject WScript.Shell -ErrorAction Stop;
-$result = $popup.Popup($message, 15, "Codex", 64);
+$result = $popup.Popup($message, 30, "Codex", 64);
 if ($result -ne 1 -and $result -ne -1) {
     throw "Unexpected popup result: $result";
 }

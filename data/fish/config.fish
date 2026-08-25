@@ -43,6 +43,61 @@ end
 function nf --wraps /home/tree/Config/data/fish/functions/notify.fish
     /home/tree/Config/data/fish/functions/notify.fish $argv
 end
+
+function nf_auto --description 'Notify, then press Enter once in the originating tmux pane'
+    set --local message 'Codex input required: choose next action'
+    set --local delay_seconds 5
+
+    argparse 'm=' 'd/delay=' -- $argv
+    or begin
+        echo 'Usage: nf_auto [-m "message"] [-d seconds]' >&2
+        return 2
+    end
+
+    if test (count $argv) -ne 0
+        echo 'Usage: nf_auto [-m "message"] [-d seconds]' >&2
+        return 2
+    end
+
+    if set --query _flag_m
+        set message $_flag_m
+    end
+    if set --query _flag_delay
+        set delay_seconds $_flag_delay
+    end
+
+    if not string match --quiet --regex '^[0-9]+([.][0-9]+)?$' -- $delay_seconds
+        echo 'nf_auto: delay must be a non-negative number' >&2
+        return 2
+    end
+    if not set --query TMUX_PANE; or test -z "$TMUX_PANE"
+        echo 'nf_auto: TMUX_PANE is unavailable' >&2
+        return 1
+    end
+    if not type --query tmux
+        echo 'nf_auto: tmux is unavailable' >&2
+        return 1
+    end
+
+    set --local pane_id $TMUX_PANE
+    if not tmux display-message -p -t $pane_id '#{pane_id}' >/dev/null 2>&1
+        echo "nf_auto: tmux pane is unavailable: $pane_id" >&2
+        return 1
+    end
+
+    /home/tree/Config/data/fish/functions/notify.fish -m "$message"
+    set --local notify_status $status
+    if test $notify_status -ne 0
+        return $notify_status
+    end
+
+    command setsid -f /usr/bin/env bash -c '
+        sleep "$1"
+        if tmux display-message -p -t "$2" "#{pane_id}" >/dev/null 2>&1; then
+            tmux send-keys -t "$2" C-m
+        fi
+    ' nf_auto $delay_seconds $pane_id </dev/null >/dev/null 2>&1
+end
 # zsh에서 <commit> 자리 채우는 형태는 fish 함수로 구현
 function gsho
   git show $argv --stat
