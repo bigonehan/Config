@@ -1,0 +1,83 @@
+{
+  "version": 6,
+  "receipts": [
+    {
+      "receipt_version": 6,
+      "contract_digest": "3303c70fed53a04da278ad58f9b4d77670291529281b98b5628acbf185f8ede6",
+      "state_digest": "fa885a759797c2b677a3d0228ce3e31590d8cebde01a6c20e07db01c43939bb3",
+      "command": [
+        "fish",
+        "--no-config",
+        "test/tmp/run-grist/run-grist-test.fish"
+      ],
+      "started_ns": 1790321386096588964,
+      "finished_ns": 1790321386113213516,
+      "exit_code": 0,
+      "stdout": "run_grist fish boundary test passed\n",
+      "stderr": "",
+      "observation": {
+        "scenario_id": "RUN-GRIST-TWO-SERVERS-1",
+        "requirement_ids": [
+          "RUN-GRIST-TWO-SERVERS"
+        ],
+        "phase": "unit",
+        "outcome": "success",
+        "observation_level": "unit",
+        "runtime": "fish mock-boundary test",
+        "user_action": "run run_grist in fish",
+        "unit_observation": "fish loads run_grist and a stub npm consumer receives the two expected project and port argument sets",
+        "observed_consumer": "stub npm received grist_video_maker port 5195 and grist_concept_list port 5196 exactly once",
+        "mocked": true,
+        "entry_stage": "fish function invocation",
+        "substitutions": [
+          {
+            "component": "npm and Vite listeners",
+            "stage": "child process consumer",
+            "reason": "project rule prohibits automatically starting development servers"
+          }
+        ]
+      },
+      "observation_error": null,
+      "signature": "b57a84f22cb3428ea47c19e03bfd30d31f93b2fb6673c572c054f08745bfb105"
+    },
+    {
+      "receipt_version": 6,
+      "contract_digest": "3303c70fed53a04da278ad58f9b4d77670291529281b98b5628acbf185f8ede6",
+      "state_digest": "fa885a759797c2b677a3d0228ce3e31590d8cebde01a6c20e07db01c43939bb3",
+      "command": [
+        "fish",
+        "--no-config",
+        "test/tmp/run-grist/run-grist-test.fish"
+      ],
+      "started_ns": 1790321386164504581,
+      "finished_ns": 1790321386178139091,
+      "exit_code": 0,
+      "stdout": "run_grist fish boundary test passed\n",
+      "stderr": "",
+      "observation": {
+        "scenario_id": "RUN-GRIST-TWO-SERVERS-2",
+        "requirement_ids": [
+          "RUN-GRIST-TWO-SERVERS"
+        ],
+        "phase": "unit",
+        "outcome": "success",
+        "observation_level": "unit",
+        "runtime": "fish mock-boundary test",
+        "user_action": "run run_grist in fish",
+        "unit_observation": "fish loads run_grist and a stub npm consumer receives the two expected project and port argument sets",
+        "observed_consumer": "stub npm received grist_video_maker port 5195 and grist_concept_list port 5196 exactly once",
+        "mocked": true,
+        "entry_stage": "fish function invocation",
+        "substitutions": [
+          {
+            "component": "npm and Vite listeners",
+            "stage": "child process consumer",
+            "reason": "project rule prohibits automatically starting development servers"
+          }
+        ]
+      },
+      "observation_error": null,
+      "signature": "845e545228edd504e72f4696102a3f31a08cf12cce1ea772bf50f98433de4227"
+    }
+  ]
+}

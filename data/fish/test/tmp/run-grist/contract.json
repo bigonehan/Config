@@ -1,0 +1,102 @@
+{
+  "task_id": "run-grist-20260925",
+  "workflow": "run_grist fish function starts two Vite development servers",
+  "user_action": "run run_grist in fish",
+  "expected_outcome": "grist_video_maker listens on localhost:5195 and grist_concept_list listens on localhost:5196",
+  "unit_observation": "fish loads run_grist and a stub npm consumer receives the two expected project and port argument sets",
+  "unit_test_commands": [
+    ["env", "RUN_GRIST_SCENARIO=RUN-GRIST-TWO-SERVERS-1", "fish", "--no-config", "test/tmp/run-grist/run-grist-test.fish"],
+    ["env", "RUN_GRIST_SCENARIO=RUN-GRIST-TWO-SERVERS-2", "fish", "--no-config", "test/tmp/run-grist/run-grist-test.fish"]
+  ],
+  "authoritative_consumer": "the two Vite development server processes and their localhost listeners",
+  "requirement_coverage": [
+    {
+      "id": "RUN-GRIST-TWO-SERVERS",
+      "incident_key": "run-grist-two-servers",
+      "source_path": "/home/tree/Config/data/fish/Input.md",
+      "source_text": "`run_grist` fish 함수 하나로 `grist_video_maker` Vite 서버를 `http://localhost:5195/`에서, `grist_concept_list` Vite 서버를 `http://localhost:5196/`에서 함께 실행한다.",
+      "source_sha256": "e1472581c72f33a437fb42e445c2e2d85dad5e81568ebe1b5445f547f662a1de"
+    }
+  ],
+  "acceptance_scenarios": [
+    {
+      "scenario_id": "RUN-GRIST-TWO-SERVERS-1",
+      "requirement_ids": ["RUN-GRIST-TWO-SERVERS"],
+      "origin": "http://localhost:5195",
+      "user_action": "run run_grist in fish",
+      "authoritative_consumer": "grist_video_maker Vite listener on port 5195",
+      "expected_output_count": 1,
+      "coverage_kind": "target",
+      "external_api_contract_ids": [],
+      "input_lineage": {
+        "original_input": {"source_kind":"user_action","source_ref":"/home/tree/Config/data/fish/Input.md","value_type":"utf-8 text","byte_length":188,"sha256":"e1472581c72f33a437fb42e445c2e2d85dad5e81568ebe1b5445f547f662a1de"},
+        "production_path": [
+          {"id":"fish-command","role":"input","interface":"fish function autoload and invocation"},
+          {"id":"npm-video","role":"handler","interface":"npm run dev with port 5195"},
+          {"id":"vite-video","role":"consumer","interface":"grist_video_maker localhost listener"}
+        ],
+        "expected_result": {"value_type":"localhost listener","byte_length":4,"sha256":"8e72a1069c42c3dd603b3c9d6fcd38f57b421001dce9c2320e04c0d0ea8d61f9"},
+        "loader_sources": [{"path":"/home/tree/.config/fish/functions/run_grist.fish","sha256":"a5a1f386a5b242009e49cd7c8dbaf6d32075118b9ea18f0e4af83d1df36f333c"}],
+        "artifact_order": [{"path":"/home/tree/.config/fish/functions/run_grist.fish","sha256":"a5a1f386a5b242009e49cd7c8dbaf6d32075118b9ea18f0e4af83d1df36f333c"}]
+      }
+    },
+    {
+      "scenario_id": "RUN-GRIST-TWO-SERVERS-2",
+      "requirement_ids": ["RUN-GRIST-TWO-SERVERS"],
+      "origin": "http://localhost:5196",
+      "user_action": "run run_grist in fish",
+      "authoritative_consumer": "grist_concept_list Vite listener on port 5196",
+      "expected_output_count": 1,
+      "coverage_kind": "target",
+      "external_api_contract_ids": [],
+      "input_lineage": {
+        "original_input": {"source_kind":"user_action","source_ref":"/home/tree/Config/data/fish/Input.md","value_type":"utf-8 text","byte_length":188,"sha256":"e1472581c72f33a437fb42e445c2e2d85dad5e81568ebe1b5445f547f662a1de"},
+        "production_path": [
+          {"id":"fish-command","role":"input","interface":"fish function autoload and invocation"},
+          {"id":"npm-concept","role":"handler","interface":"npm run dev with port 5196"},
+          {"id":"vite-concept","role":"consumer","interface":"grist_concept_list localhost listener"}
+        ],
+        "expected_result": {"value_type":"localhost listener","byte_length":4,"sha256":"974ab53b329a756966e99bca9bd6df14480081a47c29d71d9ea3f3b632bba58a"},
+        "loader_sources": [{"path":"/home/tree/.config/fish/functions/run_grist.fish","sha256":"a5a1f386a5b242009e49cd7c8dbaf6d32075118b9ea18f0e4af83d1df36f333c"}],
+        "artifact_order": [{"path":"/home/tree/.config/fish/functions/run_grist.fish","sha256":"a5a1f386a5b242009e49cd7c8dbaf6d32075118b9ea18f0e4af83d1df36f333c"}]
+      }
+    }
+  ],
+  "incident_history": [
+    {
+      "incident_key": "run-grist-two-servers",
+      "source_path": "/home/tree/Config/data/fish/Input.md",
+      "source_text": "`run_grist` fish 함수 하나로 `grist_video_maker` Vite 서버를 `http://localhost:5195/`에서, `grist_concept_list` Vite 서버를 `http://localhost:5196/`에서 함께 실행한다.",
+      "source_sha256": "e1472581c72f33a437fb42e445c2e2d85dad5e81568ebe1b5445f547f662a1de",
+      "prior_evidence_gap": "new request"
+    }
+  ],
+  "runtime_log_sources": [],
+  "input_fidelity": {
+    "production_boundary": "fish command resolution and function invocation",
+    "required_observations": ["function autoload", "two npm child commands", "two live localhost listeners"],
+    "forbidden_shortcuts": ["source-string-only assertion"]
+  },
+  "input_validation": {
+    "applicable": false,
+    "reason": "the function accepts no user-editable value; project paths and ports are fixed by the request",
+    "surfaces": []
+  },
+  "external_api_validation": {
+    "applicable": false,
+    "reason": "the requested consumers are local Vite development servers and no external API participates",
+    "contracts": []
+  },
+  "runtime_target": {
+    "environment": "interactive fish with the real local Node projects",
+    "required_origins": ["http://localhost:5195", "http://localhost:5196"],
+    "allow_fixture_origins": true,
+    "authoritative_output_root": "/home/tree/Config/data/fish/functions"
+  },
+  "repeated_report_count": 1,
+  "allowed_roots": ["/home/tree/Config/data/fish", "/home/tree/.config/fish/functions/run_grist.fish"],
+  "watch_roots": ["/home/tree/Config/data/fish", "/home/tree/.config/fish", "/home/tree/extensions/grist_video_maker", "/home/tree/extensions/grist_concept_list"],
+  "forbidden_roots": ["/home/tree/extensions/grist_video_maker", "/home/tree/extensions/grist_concept_list"],
+  "adjacent_workflows": ["all other fish functions", "grist_video_maker source", "grist_concept_list source"],
+  "delivered_artifacts": ["/home/tree/Config/data/fish/functions/run_grist.fish", "/home/tree/.config/fish/functions/run_grist.fish"]
+}
