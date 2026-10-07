@@ -13,6 +13,10 @@ data/codex/*
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
 .env
 .env.local
+
+# Temporary test contracts, state, evidence, and scripts
+/test/tmp/
+
 # Runtime data
 pids
 *.pid
