@@ -1,0 +1,120 @@
+{
+  "task_id": "run-cdp-runtime-20261006",
+  "workflow": "run_cdp foreground Chrome lifecycle and cross-session CDP attach",
+  "user_action": "run run_cdp in Fish and attach from a separate Codex session",
+  "expected_outcome": "run_cdp remains active while the owned Chrome is alive, and a separate session reads Browser and target metadata through CDP without closing Chrome",
+  "unit_observation": "Fish function syntax and explicit wait path preserve the launched browser PID until termination",
+  "authoritative_consumer": "the running Chrome process, /json/version response, and the separate session's CDP Browser/target readback",
+  "unit_test_commands": [
+    ["sh", "/home/tree/Config/test/tmp/run-cdp-unit.sh"]
+  ],
+  "requirement_coverage": [
+    {
+      "id": "RUN-CDP-FOREGROUND-ATTACH",
+      "incident_key": "run-cdp-foreground-attach",
+      "source_path": "/home/tree/Config/Input.md",
+      "source_text": "- `run_cdp`가 CDP 준비 직후 종료되지 않고 Chrome 종료까지 유지되도록 수정하며, 다른 Codex 세션이 기존 Chrome에 attach해 Browser와 target을 읽는 것을 실제 runtime에서 확인한다.",
+      "source_sha256": "b583916d3fbef184d2617e69c80f4a4bbe9c4ad8d818558bb38c50af0b31a947"
+    }
+  ],
+  "acceptance_scenarios": [
+    {
+      "scenario_id": "RUN-CDP-FOREGROUND-1",
+      "requirement_ids": ["RUN-CDP-FOREGROUND-ATTACH"],
+      "origin": "http://127.0.0.1:9222",
+      "user_action": "run run_cdp and leave the owned Chrome alive",
+      "authoritative_consumer": "foreground Fish process plus Chrome PID and /json/version",
+      "expected_output_count": 1,
+      "coverage_kind": "preservation",
+      "lifecycle_conditions": ["dedicated_profile", "headed_or_headless_runtime", "endpoint_ready", "foreground_wait"],
+      "external_api_contract_ids": [],
+      "input_lineage": {
+        "original_input": {"source_kind": "user_action", "source_ref": "/home/tree/Config/Input.md", "value_type": "utf-8 text", "byte_length": 194, "sha256": "b583916d3fbef184d2617e69c80f4a4bbe9c4ad8d818558bb38c50af0b31a947"},
+        "production_path": [{"id": "fish-function", "role": "input", "interface": "Fish function invocation"}, {"id": "run-cdp-handler", "role": "handler", "interface": "foreground PID wait"}, {"id": "chrome-process", "role": "consumer", "interface": "dedicated Chrome PID and CDP endpoint"}],
+        "expected_result": {"value_type": "live Chrome process and endpoint", "byte_length": 1, "sha256": "b583916d3fbef184d2617e69c80f4a4bbe9c4ad8d818558bb38c50af0b31a947"},
+        "loader_sources": [{"path": "/home/tree/.config/fish/functions/run_cdp.fish", "sha256": "4456b08c8ca7b8ee4c4f1a4a9b23b3c1b7c184e076031e51fa45847782a45bea"}],
+        "artifact_order": [{"path": "/home/tree/.config/fish/functions/run_cdp.fish", "sha256": "4456b08c8ca7b8ee4c4f1a4a9b23b3c1b7c184e076031e51fa45847782a45bea"}]
+      }
+    },
+    {
+      "scenario_id": "RUN-CDP-ATTACH-1",
+      "requirement_ids": ["RUN-CDP-FOREGROUND-ATTACH"],
+      "origin": "http://127.0.0.1:9222",
+      "user_action": "attach from a separate Codex session without launching or closing Chrome",
+      "authoritative_consumer": "separate session CDP Browser and target readback",
+      "expected_output_count": 1,
+      "coverage_kind": "target",
+      "lifecycle_conditions": ["existing_endpoint", "attach_only", "disconnect_only", "same_wsl_runtime"],
+      "external_api_contract_ids": [],
+      "input_lineage": {
+        "original_input": {"source_kind": "user_action", "source_ref": "/home/tree/Config/Input.md", "value_type": "utf-8 text", "byte_length": 194, "sha256": "b583916d3fbef184d2617e69c80f4a4bbe9c4ad8d818558bb38c50af0b31a947"},
+        "production_path": [{"id": "existing-cdp", "role": "input", "interface": "http://127.0.0.1:9222/json/version"}, {"id": "cdp-client", "role": "handler", "interface": "WebSocket CDP command"}, {"id": "separate-session-client", "role": "consumer", "interface": "CDP Browser and target readback"}],
+        "expected_result": {"value_type": "Browser and target metadata", "byte_length": 1, "sha256": "b583916d3fbef184d2617e69c80f4a4bbe9c4ad8d818558bb38c50af0b31a947"},
+        "loader_sources": [{"path": "/home/tree/.config/fish/functions/run_cdp.fish", "sha256": "4456b08c8ca7b8ee4c4f1a4a9b23b3c1b7c184e076031e51fa45847782a45bea"}],
+        "artifact_order": [{"path": "/home/tree/.config/fish/functions/run_cdp.fish", "sha256": "4456b08c8ca7b8ee4c4f1a4a9b23b3c1b7c184e076031e51fa45847782a45bea"}]
+      }
+    }
+  ],
+  "incident_history": [
+    {
+      "incident_key": "run-cdp-foreground-attach",
+      "source_path": "/home/tree/Config/Input.md",
+      "source_text": "- `run_cdp`가 CDP 준비 직후 종료되지 않고 Chrome 종료까지 유지되도록 수정하며, 다른 Codex 세션이 기존 Chrome에 attach해 Browser와 target을 읽는 것을 실제 runtime에서 확인한다.",
+      "source_sha256": "b583916d3fbef184d2617e69c80f4a4bbe9c4ad8d818558bb38c50af0b31a947",
+      "prior_evidence_gap": "the previous function returned immediately after CDP readiness and no attach-only second-session evidence existed"
+    }
+  ],
+  "runtime_log_sources": ["/tmp/run_cdp-9222.log"],
+  "input_fidelity": {
+    "production_boundary": "Fish function invocation and CDP client attachment",
+    "required_observations": ["function remains active", "Chrome PID remains alive", "json/version", "separate-session CDP Browser readback", "target readback"],
+    "forbidden_shortcuts": ["source-string-only assertion", "rerun run_cdp in verifier", "helper-only attach claim"]
+  },
+  "input_validation": {
+    "applicable": false,
+    "reason": "the tested default command uses fixed local runtime configuration",
+    "surfaces": []
+  },
+  "external_api_validation": {
+    "applicable": false,
+    "reason": "CDP is a local runtime protocol and no external API participates",
+    "contracts": []
+  },
+  "result_validation": {
+    "applicable": false,
+    "reason": "the authoritative result is process and CDP metadata, not a structured external API result"
+  },
+  "runtime_target": {
+    "environment": "interactive Fish with the dedicated WSL Chromium process",
+    "required_origins": ["http://127.0.0.1:9222"],
+    "allow_fixture_origins": false,
+    "authoritative_output_root": "/tmp/run_cdp-9222.log"
+  },
+  "repeated_report_count": 1,
+  "requires_behavior_preservation": true,
+  "behavior_change_analysis": {
+    "baseline_ref": "pre-change run_cdp returned immediately after /json/version readiness",
+    "changed_contract_points": [
+      {
+        "id": "RUN-CDP-WAIT-CONTRACT",
+        "kind": "lifecycle",
+        "before_contract": "return 0 immediately after CDP readiness",
+        "after_contract": "wait for the owned Chrome PID and return only after it exits",
+        "previously_accepted_states": ["help returns 0", "invalid port fails", "missing browser fails", "CDP readiness failure fails", "Chrome remains available after function return"],
+        "preserved_states": ["help returns 0", "invalid port fails", "missing browser fails", "CDP readiness failure fails", "Chrome remains available after function return"],
+        "intentionally_removed_states": [],
+        "downstream_branches_before": ["Chrome remains available after function return"],
+        "downstream_branches_preserved": ["Chrome remains available after function return"],
+        "intentionally_removed_branches": [],
+        "preservation_scenario_ids": ["RUN-CDP-FOREGROUND-1"],
+        "removal_requirement_ids": []
+      }
+    ],
+    "preservation_scenarios": ["RUN-CDP-FOREGROUND-1"]
+  },
+  "allowed_roots": ["/home/tree/Config/data/fish/functions/run_cdp.fish", "/home/tree/.config/fish/functions/run_cdp.fish", "/home/tree/Config/Input.md", "/home/tree/Config/.ai/plan", "/home/tree/Config/test/tmp"],
+  "watch_roots": ["/home/tree/Config", "/home/tree/.config/fish/functions", "/home/tree/extensions"],
+  "forbidden_roots": ["/home/tree/extensions"],
+  "adjacent_workflows": ["all other Fish functions", "browser extensions", "site automation"],
+  "delivered_artifacts": ["/home/tree/Config/data/fish/functions/run_cdp.fish", "/home/tree/.config/fish/functions/run_cdp.fish"]
+}

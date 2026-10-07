@@ -11,3 +11,10 @@
 ## 2026-08-17
 
 - tmux copy-mode에서 `a`를 누르면 선택 경로로 Nvim을 실행하는 `Config/data/tmux/tmux.conf`의 바인딩을 영구 삭제한다.
+
+## 2026-10-06
+
+- WSL의 `run_cdp` Fish 함수가 지정된 전용 Chrome 프로필의 기존 프로세스를 종료한 뒤 새 Chrome을 실행하고, CDP `/json/version` 응답으로 연결 가능 상태를 확인하도록 개선한다.
+- `run_cdp`가 CDP 준비 직후 종료되지 않고 Chrome 종료까지 유지되도록 수정하며, 다른 Codex 세션이 기존 Chrome에 attach해 Browser와 target을 읽는 것을 실제 runtime에서 확인한다.
+- 브라우저 자동화·브라우저 테스트·사이트 접속이 필요할 때 `run_cdp`로 CDP 세션을 열고 접속 주소를 확인해 연결하는 Skill을 만들며, Test Manager의 웹사이트 관련 구현 최종 흐름 탐색에서 이 Skill을 사용한다.
+- `run_cdp` Skill에서 로그인·사용자 인증창이 발견되면 자격 증명을 직접 처리하지 않고 `nf`로 인증 필요를 알린 뒤 사용자가 같은 브라우저에서 인증하도록 안내한다.
