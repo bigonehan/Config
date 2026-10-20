@@ -245,3 +245,8 @@ alias codexo codex-run
 # >>> grok installer >>>
 fish_add_path $HOME/.grok/bin
 # <<< grok installer <<<
+
+
+# Added by Antigravity CLI installer
+set -gx PATH "/home/tree/.local/bin" $PATH
+alias agy "command agy --dangerously-skip-permissions"

@@ -253,7 +253,22 @@ require('lazy').setup({
 		ops = {},
 		config = function()
 			local presets = require("markview.presets");
-			require("markview").setup(presets.no_nerd_fonts);
+			local cfg = vim.deepcopy(presets.no_nerd_fonts);
+			cfg.markdown_inline.hyperlinks.default = function(_, item)
+				if item.class == "inline_link_shortcut" then
+					return {
+						icon = "",
+						corner_left = "[",
+						corner_right = "]",
+						hl = "MarkviewPalette2",
+					};
+				end
+				return {
+					icon = "↗ ",
+					hl = "MarkviewHyperlink",
+				};
+			end
+			require("markview").setup(cfg);
 		end
 	},
 	'rhysd/git-messenger.vim',

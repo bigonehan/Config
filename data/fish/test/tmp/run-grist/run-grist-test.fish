@@ -26,6 +26,7 @@ or exit 1
 
 set -l actual (sort "$RUN_GRIST_TEST_LOG" | string collect)
 set -l expected (string join \n -- \
+    '--prefix /home/tree/extensions/grist_cartoon_maker run dev -- --port 5175' \
     '--prefix /home/tree/extensions/grist_concept_list run dev -- --port 5196' \
     '--prefix /home/tree/extensions/grist_video_maker run dev -- --port 5195' \
     | string collect)
