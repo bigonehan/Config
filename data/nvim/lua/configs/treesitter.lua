@@ -1,10 +1,12 @@
-require 'nvim-treesitter.configs'.setup {
-	ensure_installed = { "rust", "go", "html", "javascript", "typescript", "python", "tsx", "markdown", "json", "glsl", },
-	sync_install = true,
-	incremental_selection = { enable = true, },
-	highlight = { enable = true, additional_vim_regex_highlighting = false },
-	indent = { enable = true, disable = {}, }
-}
+-- nvim-treesitter main: 파서 설치는 tree-sitter CLI, 하이라이트·들여쓰기는 Neovim 내장 기능으로 켠다.
+require('nvim-treesitter').install { "rust", "go", "html", "javascript", "typescript", "python", "tsx", "markdown", "markdown_inline", "json", "glsl" }
+vim.api.nvim_create_autocmd('FileType', {
+	callback = function(args)
+		if pcall(vim.treesitter.start, args.buf) then
+			vim.bo[args.buf].indentexpr = "v:lua.require'nvim-treesitter'.indentexpr()"
+		end
+	end,
+})
 -- require 'treesitter-context'.setup { enable = true }
 --
 -- require('nvim-treesitter.configs').setup {

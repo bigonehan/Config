@@ -106,7 +106,7 @@ require('lazy').setup({
 	{
 		"microsoft/vscode-js-debug",
 		version = "1.x",
-		build = "npm i && npm run compile vsDebugServerBundle && mv dist out"
+		build = "npm i --ignore-scripts && npx gulp vsDebugServerBundle && rm -rf out && mv dist out"
 	},
 	{
 		'rcarriga/nvim-notify',
@@ -287,10 +287,11 @@ require('lazy').setup({
 		config = function()
 			require("configs.treesitter")
 		end,
+		branch = 'main',
 		dependencies = { "OXY2DEV/markview.nvim" },
-		build = { ':TSUpdate', ':TSInstall markdown markdown_inline' }
+		build = ':TSUpdate'
 	},
-	'nvim-treesitter/nvim-treesitter-textobjects',
+	{ 'nvim-treesitter/nvim-treesitter-textobjects', branch = 'main' },
 	'nvim-treesitter/nvim-treesitter-context',
 	'vim-pandoc/vim-pandoc-syntax',
 	'RRethy/nvim-treesitter-textsubjects',

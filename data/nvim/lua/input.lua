@@ -134,34 +134,19 @@ vim.api.nvim_set_keymap('n', '<leader>q', ':RgFzf <CR>', { noremap = true, silen
 
 
 -- treesitter settings
-require 'nvim-treesitter.configs'.setup {
-	textobjects = {
-		select = {
-			enable = true,
-			-- Automatically jump forward to textobj, similar to targets.vim
-			lookahead = true,
-			keymaps = {
-				-- You can use the capture groups defined in textobjects.scm
-				["af"] = "@function.outer",
-				["if"] = "@function.inner",
-				["ac"] = "@class.outer",
-				["ic"] = "@class.inner"
-			}
-		},
-		move = {
-			enable = true,
-			set_jumps = true,
-			goto_next_start = {
-				['N'] = '@function.outer',
-				[']]'] = '@class.outer'
-			},
-			goto_previous_start = {
-				['E'] = '@function.outer',
-				['[['] = '@class.outer'
-			}
-		}
-	}
+require('nvim-treesitter-textobjects').setup {
+	select = { lookahead = true },
+	move = { set_jumps = true },
 }
+local ts_select = require('nvim-treesitter-textobjects.select')
+for key, query in pairs({ af = '@function.outer', ['if'] = '@function.inner', ac = '@class.outer', ic = '@class.inner' }) do
+	vim.keymap.set({ 'x', 'o' }, key, function() ts_select.select_textobject(query, 'textobjects') end)
+end
+local ts_move = require('nvim-treesitter-textobjects.move')
+vim.keymap.set({ 'n', 'x', 'o' }, 'N', function() ts_move.goto_next_start('@function.outer', 'textobjects') end)
+vim.keymap.set({ 'n', 'x', 'o' }, ']]', function() ts_move.goto_next_start('@class.outer', 'textobjects') end)
+vim.keymap.set({ 'n', 'x', 'o' }, 'E', function() ts_move.goto_previous_start('@function.outer', 'textobjects') end)
+vim.keymap.set({ 'n', 'x', 'o' }, '[[', function() ts_move.goto_previous_start('@class.outer', 'textobjects') end)
 --personal funcitons
 -- 현재 파일과 동일한 파일명을 가진 파일을 찾아서 열기
 local function open_entity_file()
