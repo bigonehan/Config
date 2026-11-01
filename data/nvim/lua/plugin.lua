@@ -671,12 +671,16 @@ require('lazy').setup({
 		"kylechui/nvim-surround",
 		version = "*",
 		event = "VeryLazy",
+		init = function()
+			vim.g.nvim_surround_no_visual_mappings = true
+		end,
 		config = function()
-			require("nvim-surround").setup({
-				keymaps = {
-					visual = "'",
-					visual_line = "'g",
-				}
+			require("nvim-surround").setup({})
+			vim.keymap.set("x", "'", "<Plug>(nvim-surround-visual)", {
+				desc = "Add a surrounding pair around a visual selection",
+			})
+			vim.keymap.set("x", "'g", "<Plug>(nvim-surround-visual-line)", {
+				desc = "Add a surrounding pair around a visual selection, on new lines",
 			})
 		end
 	},
@@ -740,6 +744,7 @@ require('lazy').setup({
 			"stevearc/dressing.nvim",
 			"nvim-lua/plenary.nvim",
 			"MunifTanjim/nui.nvim",
+			{ "ColinKennedy/mega.cmdparse", dependencies = { "ColinKennedy/mega.logging" } },
 			"echasnovski/mini.pick",
 			"nvim-telescope/telescope.nvim",
 			"hrsh7th/nvim-cmp",
