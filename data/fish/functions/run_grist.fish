@@ -4,9 +4,9 @@ function run_grist --description 'Start the Grist video maker, concept list, and
         return 2
     end
 
-    set -l video_dir /home/tree/extensions/grist_video_maker
-    set -l concept_dir /home/tree/extensions/grist_concept_list
-    set -l cartoon_dir /home/tree/extensions/grist_cartoon_maker
+    set -l video_dir /home/tree/manage_work/tools/grist/scene_maker
+    set -l concept_dir /home/tree/manage_work/tools/grist/gallery_concept
+    set -l cartoon_dir /home/tree/manage_work/tools/grist/cartoon_maker
 
     for project_dir in $video_dir $concept_dir $cartoon_dir
         if not test -f "$project_dir/package.json"

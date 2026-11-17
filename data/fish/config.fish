@@ -211,7 +211,7 @@ function codex-normal
   command codex --dangerously-bypass-approvals-and-sandbox "$prompt"
 end
 function codex-run
-  set override ~/ai/codex/AGENTS.override.md
+  set override ~/manage_work/rules/codex/AGENTS.override.md
   if not test -f $override
     echo "BLOCK: AGENTS.override.md 없음: $override"
     return 1
@@ -219,7 +219,7 @@ function codex-run
 
   set workspace_root (pwd -P)
   set user_msg (string join " " -- $argv)
-  set prompt "~/ai/codex/AGENTS.override.md를 먼저 읽고, /home/tree/project/work_helper의 작업 방식을 현재 저장소에서 그대로 따르는 코딩 에이전트로 행동해.
+  set prompt "~/manage_work/rules/codex/AGENTS.override.md를 먼저 읽고, /home/tree/project/work_helper의 작업 방식을 현재 저장소에서 그대로 따르는 코딩 에이전트로 행동해.
 - 현재 세션은 manager session이며 danger-full-access sandbox에서 실행된다.
 - manager session은 work_helper workflow 관리와 산출물 생성을 담당하고, 실제 구현은 work_helper 하위 Codex 세션에 위임한다.
 - 구현이 필요하면 /home/tree/project/work_helper를 통해 별도 하위 Codex 세션을 열어 위임한다.
