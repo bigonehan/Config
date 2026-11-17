@@ -3,8 +3,8 @@
 // changing these requires a restart to take effect
 plugins {
     about location="zellij:about"
-    compact-bar location="zellij:bars" {
-        role "compact-bar"
+    compact-bar location="file:/home/tree/.config/zellij/plugins/zellij_stage_bar.wasm" {
+        cwd "/home/tree/extensions"
     }
     configuration location="zellij:configuration"
     context-menu location="zellij:context-menu"
@@ -43,7 +43,7 @@ web_client {
 //   - true
 //   - false (Default)
 // 
-// simplified_ui true
+simplified_ui true
  
 // Enable OSC8 hyperlink output
 // Options:
@@ -90,7 +90,7 @@ web_client {
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+default_layout "compact"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -344,7 +344,7 @@ web_client {
 //   - vertical (Default)
 //   - horizontal
 // 
-// stacked_pane_list_orientation "vertical"
+stacked_pane_list_orientation "horizontal"
  
 // Whether to show tips on startup
 // Default: true
