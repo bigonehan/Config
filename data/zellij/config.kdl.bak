@@ -3,8 +3,12 @@
 // changing these requires a restart to take effect
 plugins {
     about location="zellij:about"
-    compact-bar location="zellij:bars" {
-        role "compact-bar"
+    compact-bar location="file:/home/tree/.config/zellij/plugins/zellij_stage_bar.wasm" {
+        cwd "/home/tree/extensions"
+    }
+    stage-top location="file:/home/tree/.config/zellij/plugins/zellij_stage_bar.wasm" {
+        cwd "/home/tree/extensions"
+        role "top"
     }
     configuration location="zellij:configuration"
     context-menu location="zellij:context-menu"
@@ -43,7 +47,7 @@ web_client {
 //   - true
 //   - false (Default)
 // 
-// simplified_ui true
+simplified_ui true
  
 // Enable OSC8 hyperlink output
 // Options:
@@ -55,7 +59,7 @@ web_client {
 // Choose the theme that is specified in the themes section.
 // Default: default
 // 
-// theme "dracula"
+ theme "melange_me"
  
 // Theme to use when the host terminal reports a dark color palette.
 // Requires `theme_light` to also be set; otherwise `theme` is used.
@@ -90,7 +94,7 @@ web_client {
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-// default_layout "compact"
+default_layout "stage"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -119,9 +123,10 @@ web_client {
 // Options:
 //   - true (default, enabled)
 //   - false
-// 
-// pane_frames false
- 
+//
+// stage bar(상단 줄)가 pane 이름을 탭으로 보여 주므로 테두리 제목(Main >)은 끈다 (#1091)
+pane_frames false
+
 // Set the pane frame style when pane_frames is enabled
 // Options:
 //   - full
@@ -344,7 +349,7 @@ web_client {
 //   - vertical (Default)
 //   - horizontal
 // 
-// stacked_pane_list_orientation "vertical"
+stacked_pane_list_orientation "horizontal"
  
 // Whether to show tips on startup
 // Default: true
@@ -489,3 +494,4 @@ web_client {
 // Whether to show the current mode's keys in a corner while the bar that would show them is hidden
 // default is true
 // mode_hints_when_bars_hidden false
+keybinds preset="default"

@@ -1,0 +1,15 @@
+themes {
+    melange_me {
+        fg "#54433A"
+        bg "#F1F1F1"
+        black "#D9D3CE"
+        red "#C77B8B"
+        green "#6E9B72"
+        yellow "#BC5C00"
+        blue "#7892BD"
+        magenta "#BE79BB"
+        cyan "#739797"
+        white "#7A6C63"
+        orange "#465AA4"
+    }
+}

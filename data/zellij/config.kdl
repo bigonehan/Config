@@ -4,7 +4,11 @@
 plugins {
     about location="zellij:about"
     compact-bar location="file:/home/tree/.config/zellij/plugins/zellij_stage_bar.wasm" {
-        cwd "/home/tree/extensions"
+        cwd "/home/tree/manage_work"
+    }
+    stage-top location="file:/home/tree/.config/zellij/plugins/zellij_stage_bar.wasm" {
+        cwd "/home/tree/manage_work"
+        role "top"
     }
     configuration location="zellij:configuration"
     context-menu location="zellij:context-menu"
@@ -90,7 +94,7 @@ simplified_ui true
 // The name of the default layout to load on startup
 // Default: "default"
 // 
-default_layout "compact"
+default_layout "stage"
  
 // The folder in which Zellij will look for layouts
 // (Requires restart)
@@ -119,9 +123,10 @@ default_layout "compact"
 // Options:
 //   - true (default, enabled)
 //   - false
-// 
-// pane_frames false
- 
+//
+// stage bar(상단 줄)가 pane 이름을 탭으로 보여 주므로 테두리 제목(Main >)은 끈다 (#1091)
+pane_frames false
+
 // Set the pane frame style when pane_frames is enabled
 // Options:
 //   - full
@@ -489,4 +494,45 @@ stacked_pane_list_orientation "horizontal"
 // Whether to show the current mode's keys in a corner while the bar that would show them is hidden
 // default is true
 // mode_hints_when_bars_hidden false
-keybinds preset="default"
+keybinds preset="default" {
+    normal {
+        bind "Ctrl n" { SwitchToMode "Tab"; }
+        bind "Ctrl x" { SwitchToMode "Resize"; }
+        bind "Ctrl l" { SwitchToMode "Move"; }
+    }
+    move {
+        bind "Ctrl l" { SwitchToMode "Normal"; }
+        bind "Shift p" { MovePaneBackwards; }
+        bind "p" {
+            SwitchToMode "Normal"
+            MessagePlugin "file:/home/tree/.config/zellij/plugins/zellij_project_layout.wasm" {
+                name "project-layout"
+                floating true
+            }
+        }
+    }
+    resize {
+        bind "t" { CloseTab; SwitchToMode "Normal"; }
+        bind "p" { CloseFocus; SwitchToMode "Normal"; }
+    }
+    tab {
+        unbind "r"
+        bind "t" { NewTab; SwitchToMode "Normal"; }
+        bind "p" { NewPane "stacked"; SwitchToMode "Normal"; }
+        bind "h" { NewPane "Right"; SwitchToMode "Normal"; }
+    }
+    renametab {
+        bind "Ctrl ." { UndoRenameTab; SwitchToMode "Normal"; }
+        bind "Esc" { UndoRenameTab; SwitchToMode "Normal"; }
+    }
+    shared_except "locked" "renametab" {
+        bind "Ctrl ." { SwitchToMode "RenameTab"; TabNameInput 0; }
+    }
+    shared_except "locked" {
+        bind "Alt Up" { FocusPreviousPane; }
+        bind "Alt Down" { FocusNextPane; }
+        bind "Alt Shift Left" { MoveTab "Left"; }
+        bind "Alt Shift Right" { MoveTab "Right"; }
+    }
+}
+show_startup_tips false
