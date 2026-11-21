@@ -255,6 +255,16 @@ require('lazy').setup({
 			local presets = require("markview.presets");
 			local cfg = vim.deepcopy(presets.no_nerd_fonts);
 			cfg.markdown_inline.hyperlinks.default = function(_, item)
+				-- Keep journal markers such as [완료][🧹] visible in preview.
+				local reference = item.text and item.text[1] and item.text[1]:match("^%[[^%]]+%]%[([^%]]+)%]$")
+				if reference and (vim.fn.charclass(reference) == 3 or reference:find("️", 1, true) or reference:find("⃣", 1, true)) then
+					return {
+						icon = "",
+						corner_left = "[",
+						corner_right = "][" .. reference .. "]",
+						hl = "MarkviewPalette2",
+					};
+				end
 				if item.class == "inline_link_shortcut" then
 					return {
 						icon = "",
